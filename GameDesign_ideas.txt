@@ -1,0 +1,112 @@
+Enviado para: Tamara, Ana Claudia
+
+Ideia 1 - Figura1.jpeg
+Estilo do Jogo: Lembra Fruit Ninja
+Objetivo do Jogo: Proteger a Terra de Lixo Toxico, Alimentar de Material Composto e Adubar a Terra
+
+Objetivo Específico do Jogo:
+- Bloquear todo Lixo (Material que provoca dano no solo)
+- Aceitar e digerir todo material de compostagem
+- Defecar para adubar o solo (automático)
+- Quanto mais fértil o solo, mais 'bonito' fica a terra. Entende-se bonito, como uma cor mais chamativa (nível de qualidade do Solo).
+
+Como Jogar? 
+Tocar no botão lado Esquerdo para Aceitar os Objetos ou
+Tocar no botão lado Direito para Rejeitar Objetos que são atirados na direção da Minhoca
+
+Personagem do Jogo / Funcionalidade: 
+Minhoca. Ela pode andar de um ponto ao outro da tela. O jogador pode direcionar ela para um lado deslizando horizontalmente o dedo na tela.
+
+Pontuação: 
+Pontos positivos por alimentos 
+Pontos negativos para Lixo Toxico
+Outras:
+Pontos por jogo mais rápido (com menos dano no solo/minhoca)
+Ponto por detonar bomba ácida
+
+Como ganhar ou passar de fase?
+Se a pontuação for maior que 500 por exemplo e a minhoca adubar a terra corretamente, o jogador vai para próxima fase.
+*Pontuação aumenta conforme aumenta fase
+
+Como perder no jogo?  
+- Se o jogador não adubar a terra corretamente ( a cor da terra determina isso), jogador perde o jogo.
+- Se o Lixo tóxico acertar a minhoca 3+ vezes, jogador perde o jogo.
+
+Como ganhar vidas?
+A partir da primeira fase, o jogador conta com updates (borra de café, alface, casca de legumes) que vai aparecer em algum lugar da tela e ficar cerca de 4 segundos para a minhoca se alimentar.
+
+Fases do Jogo: 
+Pode ter N fases, com formas de jogar diferente e objetivos diferentes (Sequencia de fases a definir). 
+Fase 1 - Atingir a pontuação mínima
+Fase 2 - Proteger / Adubar o Solo 
+Fase 3 - Jogo mais rápido (Atira objetos mais rápido para jogador)
+Fase 4 - Fazer maior pontuação em menos segundos (Adicionar Relogio com contagem regressiva) 
+Fase 5 - Detonar Bomba Ácida (Laranja e Limão)
+
+Recompensa (Desbloqueios): 
+- Adicionar alimentos (borra de café, alface, casca de legumes) na fase seguinte, em caso da minhoca ser acertada, isso pode reviver ela. 
+
+Tempo de Execução do Projeto: 
+De 5 a 6 meses para criar 1 fase (até 2).
+
+Nível de Dificuldade para Jogar: Médio ao Difícil
+
+Nível de Dificuldade para Produção (desenvolvimento): Médio
+
+Comentários sobre a Ideia:
+- O Jogo é mais lúdico, mais educativo, pois foca no objetivo, que é ensinar e educar crianças vermicompostagem. 
+- Pelo menos 1 fase será completa até o fim do projeto. 
+- Pode criar N fases sem fugir do objetivo, mantendo a mesma dificuldade.
+
+Ideia 2 - Figura2.jpeg
+Estilo do Jogo: PacMan (Labirinto) com expansão 
+
+Objetivo do Jogo: Proteger a Terra de Lixo Toxico , Alimentar de Materiais Orgânicos e Fugir dos Inimigos
+
+Como jogar: Use as setas de direção, para movimentar a minhoca dentro do ambiente. Entre na caixa (labirinto) e fuja dos inimigos ao mesmo tempo que se alimenta dos materiais que estão na caixa.   
+
+Personagem do Jogo / Funcionalidade:
+Minhoca. Ela pode andar de um ponto ao outro da tela. O jogador pode direcionar ela usando o botão direcional (touch). 
+Evitar caminho onde tem Lixo tóxico.
+
+Inimigos: 
+- Formiga
+- Sanguessuga
+- Passarinhos (pardal, bem-te-vi e outros)
+
+Pontuação: 
+Pontos positivos por alimentos 
+Pontos negativos para Lixo Toxico
+
+Como ganhar ou passar de fase?
+- Fazer pontuação Mínima
+- Proteger dos inimigos
+- Comer todos os alimentos antes dos Inimigos
+- Chegar até o checkpoint (Somatória dos pontos)
+
+Como perder no jogo?  
+- Jogador (Minhoca) não proteger a terra e se proteger ( a cor da terra determina isso)
+- Se ele fazer contato (hit) com qualquer predador 3+ vezes, ele perde o jogo.
+
+Como ganhar vidas?
+A partir da primeira fase, o jogador conta com updates (borra de café, alface, casca de legumes) que vai aparecer em algum lugar da tela e ficar cerca de 4 segundos para a minhoca se alimentar.
+
+Recompensa (Desbloqueios): 
+- Adicionar alimentos (borra de café, alface, casca de legumes) na fase seguinte, em caso da minhoca ser acertada, isso pode reviver ela. 
+
+
+Tempo de Execução do Projeto: 
+6 meses para criar 1 fase.
+
+Nível de Dificuldade para Produção: 
+Difícil
+
+Comentários sobre a Ideia:
+-É um jogo educativo, porém o processo para o jogador (a criança, no caso) entender a vermicompostagem pode levar mais tempo que e Ideia 1.
+-Pelo nível de dificuldade, pode ser que algumas características possam não ser implementadas no tempo de projeto. 
+
+
+Comentário Geral:
+Se o termino do desenvolvimento for suficiente, o jogo poderá contar com Dicas de Vermicompostagem (Livro Guia)  já na primeira versão do jogo.
+
+Dito isto, o que acha Tamara? Pode dar sugestões de melhoria também!
