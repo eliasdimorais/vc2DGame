@@ -1,0 +1,139 @@
+fileFormatVersion: 2
+guid: 5c341580e2b934c1b921c19fc16eb3a2
+timeCreated: 1457823969
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: worm_walk174x105_0
+    21300002: worm_walk174x105_4
+    21300004: worm_walk174x105_2
+    21300006: worm_walk174x105_3
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 160
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: worm_walk174x105_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 212
+        width: 174
+        height: 105
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 174, y: -57}
+        - {x: 174, y: -12}
+        - {x: 159, y: 0}
+        - {x: 127, y: 0}
+        - {x: 0, y: -61}
+        - {x: 0, y: -105}
+        - {x: 131, y: -105}
+        - {x: 132, y: -104}
+        - {x: 132, y: -103}
+        - {x: 128, y: -100}
+    - name: worm_walk174x105_4
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 212
+        width: 174
+        height: 105
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 66, y: 0}
+        - {x: 21, y: -34}
+        - {x: 5, y: -70}
+        - {x: 5, y: -96}
+        - {x: 7, y: -105}
+        - {x: 149, y: -105}
+        - {x: 163, y: -79}
+        - {x: 163, y: 0}
+    - name: worm_walk174x105_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 106
+        width: 174
+        height: 105
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 150, y: 0}
+        - {x: 122, y: 0}
+        - {x: 110, y: -6}
+        - {x: 0, y: -60}
+        - {x: 0, y: -105}
+        - {x: 138, y: -105}
+        - {x: 164, y: -67}
+        - {x: 164, y: -21}
+        - {x: 160, y: -10}
+    - name: worm_walk174x105_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 174
+        height: 105
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 26, y: 0}
+        - {x: 0, y: -58}
+        - {x: 0, y: -105}
+        - {x: 132, y: -105}
+        - {x: 132, y: -103}
+        - {x: 164, y: -74}
+        - {x: 164, y: 0}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
