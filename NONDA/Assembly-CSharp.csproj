@@ -46,8 +46,13 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\_Scripts\Controller\Camera\CameraFollow.cs" />
+     <Compile Include="Assets\_Scripts\Controller\Camera\Controller2D.cs" />
+     <Compile Include="Assets\_Scripts\Controller\Checkpoint.cs" />
      <Compile Include="Assets\_Scripts\Controller\GameTimer.cs" />
+     <Compile Include="Assets\_Scripts\Controller\KillPlayer.cs" />
      <Compile Include="Assets\_Scripts\Controller\LevelManager.cs" />
+     <Compile Include="Assets\_Scripts\Controller\PlayerController.cs" />
+     <Compile Include="Assets\_Scripts\Model\Player.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

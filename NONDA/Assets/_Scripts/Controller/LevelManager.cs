@@ -1,34 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
 	#region Public Variables
 	public float autoLoadNextLevelAfter;
+	public GameObject currentCheckpoint;
+	#endregion
+
+	#region Private Variabless
+	private PlayerController player;
 	#endregion
 
 	void Start(){
+		player = FindObjectOfType<PlayerController>();
 		if(autoLoadNextLevelAfter <= 0){
 			Debug.Log("Level auto load DISABLED, use a positive number in SECONDS");
 		}else{
 			Invoke ("LoadNextLevel", autoLoadNextLevelAfter);
-		}
-		
+		}	
 	}
-	public void LoadLevel(string name)
-    {
-		Debug.Log ("New Level load: " + name);
-		Application.LoadLevel (name);
+
+	public void LoadLevel(string name){
+		Debug.Log ("New Level loaded: " + name);
+		SceneManager.LoadScene (name);
 	}
-	public void QuitRequest()
-    {
+
+	public void QuitRequest(){
 		Debug.Log ("Quit requested");
 		Application.Quit ();
 	}
 
-	public void LoadNextLevel()
-    {
-		Application.LoadLevel(Application.loadedLevel + 1); //load next level
+	public void LoadNextLevel(){
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); //load next level
+	}
+
+	public void RespawnPlayer(){
+		Debug.Log("Player Respawn Here");
+		player.transform.position = currentCheckpoint.transform.position;
 	}
 	
 }

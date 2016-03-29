@@ -11,7 +11,7 @@ public class GameTimer : MonoBehaviour {
 	#endregion
 
 	#region Private Variables
-	private bool isEndOfLevel = false;
+	//private bool isEndOfLevel = false;
 	#endregion
 
 	void Start () {
