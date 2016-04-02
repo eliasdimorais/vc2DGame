@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 49646e2e9473c4362ae50330655a5ab7
-timeCreated: 1457819227
+timeCreated: 1459448983
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,7 +10,7 @@ TextureImporter:
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -47,7 +47,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 160
+  spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
@@ -60,29 +60,29 @@ TextureImporter:
         y: 239
         width: 286
         height: 238
-      alignment: 1
-      pivot: {x: 0, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 247, y: -131}
-        - {x: 247, y: -63}
-        - {x: 246, y: -59}
-        - {x: 237, y: -42}
-        - {x: 205, y: -24}
-        - {x: 171, y: -24}
-        - {x: 51, y: -103}
-        - {x: 4, y: -139}
-        - {x: 4, y: -185}
-        - {x: 29, y: -199}
-        - {x: 36, y: -199}
-        - {x: 56, y: -213}
-        - {x: 37, y: -226}
-        - {x: 33, y: -233}
-        - {x: 41, y: -237}
-        - {x: 54, y: -238}
-        - {x: 211, y: -238}
-        - {x: 220, y: -230}
-        - {x: 210, y: -225}
+      - - {x: 104, y: -12}
+        - {x: 104, y: 56}
+        - {x: 103, y: 60}
+        - {x: 94, y: 77}
+        - {x: 62, y: 95}
+        - {x: 28, y: 95}
+        - {x: -92, y: 16}
+        - {x: -139, y: -20}
+        - {x: -139, y: -66}
+        - {x: -114, y: -80}
+        - {x: -107, y: -80}
+        - {x: -87, y: -94}
+        - {x: -106, y: -107}
+        - {x: -110, y: -114}
+        - {x: -102, y: -118}
+        - {x: -89, y: -119}
+        - {x: 68, y: -119}
+        - {x: 77, y: -111}
+        - {x: 67, y: -106}
     - name: bird2_walk_1
       rect:
         serializedVersion: 2
@@ -90,30 +90,30 @@ TextureImporter:
         y: 239
         width: 286
         height: 238
-      alignment: 1
-      pivot: {x: 0, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 165, y: -228}
-        - {x: 67, y: -228}
-        - {x: 52, y: -229}
-        - {x: 52, y: -238}
-        - {x: 169, y: -238}
-        - {x: 172, y: -235}
-        - {x: 172, y: -230}
-      - - {x: 237, y: -19}
-        - {x: 216, y: 0}
-        - {x: 177, y: 0}
-        - {x: 121, y: -16}
-        - {x: 0, y: -111}
-        - {x: 0, y: -165}
-        - {x: 5, y: -182}
-        - {x: 64, y: -207}
-        - {x: 83, y: -219}
-        - {x: 187, y: -219}
-        - {x: 248, y: -167}
-        - {x: 248, y: -35}
-        - {x: 247, y: -29}
+      - - {x: 22, y: -109}
+        - {x: -76, y: -109}
+        - {x: -91, y: -110}
+        - {x: -91, y: -119}
+        - {x: 26, y: -119}
+        - {x: 29, y: -116}
+        - {x: 29, y: -111}
+      - - {x: 94, y: 100}
+        - {x: 73, y: 119}
+        - {x: 34, y: 119}
+        - {x: -22, y: 103}
+        - {x: -143, y: 8}
+        - {x: -143, y: -46}
+        - {x: -138, y: -63}
+        - {x: -79, y: -88}
+        - {x: -60, y: -100}
+        - {x: 44, y: -100}
+        - {x: 105, y: -48}
+        - {x: 105, y: 84}
+        - {x: 104, y: 90}
     - name: bird2_walk_2
       rect:
         serializedVersion: 2
@@ -121,24 +121,24 @@ TextureImporter:
         y: 0
         width: 286
         height: 238
-      alignment: 1
-      pivot: {x: 0, y: 1}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 237, y: -177}
-        - {x: 245, y: -142}
-        - {x: 245, y: -53}
-        - {x: 211, y: -33}
-        - {x: 165, y: -33}
-        - {x: 40, y: -113}
-        - {x: 0, y: -149}
-        - {x: 0, y: -186}
-        - {x: 10, y: -208}
-        - {x: 66, y: -238}
-        - {x: 171, y: -238}
-        - {x: 181, y: -237}
-        - {x: 185, y: -231}
-        - {x: 178, y: -227}
+      - - {x: 94, y: -58}
+        - {x: 102, y: -23}
+        - {x: 102, y: 66}
+        - {x: 68, y: 86}
+        - {x: 22, y: 86}
+        - {x: -103, y: 6}
+        - {x: -143, y: -30}
+        - {x: -143, y: -67}
+        - {x: -133, y: -89}
+        - {x: -77, y: -119}
+        - {x: 28, y: -119}
+        - {x: 38, y: -118}
+        - {x: 42, y: -112}
+        - {x: 35, y: -108}
     outline: []
   spritePackingTag: 
   userData: 
