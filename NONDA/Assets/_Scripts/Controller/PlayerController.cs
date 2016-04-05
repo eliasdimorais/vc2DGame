@@ -7,15 +7,17 @@ public class PlayerController : MonoBehaviour {
 	public float groundRadius;
 	public LayerMask whatIsGround;
 	public float facingRight;
+	public Transform playerC; // Drag your player here
 	#endregion
 
 	#region Private Variables
 	private Rigidbody2D rigidB2D;
-	private bool grounded = false;
+	private bool grounded;
 	private bool doubleJumped = false;
 	private Animator animator;
-
-	//private Vector2 touchOrigin = -Vector2.one;
+	private Vector2 fp; // first finger position
+	private Vector2 lp; // last finger position
+	private float offset = 80; //value where accept touch to calculate swipe
 	#endregion
 
 	#region Instances 
@@ -27,46 +29,68 @@ public class PlayerController : MonoBehaviour {
 	    animator = GetComponent<Animator>();
 	    rigidB2D = GetComponent<Rigidbody2D>();
 	    rigidB2D.freezeRotation = true;
-
 	}
 
 	void Update(){
-	    if(Input.GetButtonDown("Jump") && grounded){
+	#if UNITY_ANDROID
+		foreach(Touch touch in Input.touches){
+			if (touch.phase == TouchPhase.Began){
+				fp = touch.position;
+				lp = touch.position;
+			}
+			if (touch.phase == TouchPhase.Moved ){
+				lp = touch.position;
+			}
+			if(touch.phase == TouchPhase.Ended){
+				if((fp.x - lp.x) > offset) // left swipe
+				{
+					//playerC.Rotate(0,-90,0);
+					Flip();
+				}
+				else if((fp.x - lp.x) < offset * -1) // right swipe
+				{
+					//playerC.Rotate(0,90,0);
+					Flip();
+				}
+				else if((fp.y - lp.y) < offset * -1  ) // up swipe
+				{
+					Jump();
+				}
+			}
+		}
+		if(Input.touchCount >0){
+			Touch touch = Input.GetTouch(0);
+			if(touch.phase == TouchPhase.Moved){
+				
+			}
+		}
+	#elif UNITY_EDITOR
+		if(Input.GetButtonDown("Jump") && grounded){
 	        Jump();
 	    }
-
 	    if(Input.GetButtonDown("Jump") && !doubleJumped && !grounded){
 	        DoubleJump();
 	    }
+	#endif
 	}
-
-	void RotateLeft() {
-    	transform.Rotate (Vector3.back * -5f);
-	}
-
-	void RotateRight() {
-    transform.Rotate (Vector3.forward * 5f);
-}
 
 	void Flip(){
+	#if UNITY_ANDROID 
+		player.MoveSpeed *= -1; //change Speed to eighter negative or positive
+
 		player.FacingRight = !player.FacingRight;
-		player.MoveSpeed *= -1;
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
 		rigidB2D.MoveRotation(rigidB2D.rotation + player.MoveSpeed * Time.fixedDeltaTime);
-
-
+	#endif
 	}
+
 
 	void Jump(){
 		animator.SetBool("Grounded", false);
-		rigidB2D.AddForce(new Vector2(0, player.JumpHeight));
-	    //rigidB2D.velocity = new Vector2 (rigidB2D.velocity.x, player.JumpHeight);
-		Debug.Log("Jumping at - " + rigidB2D.velocity.y);
-
-
-
+		//rigidB2D.AddForce(new Vector2(0, player.JumpHeight));
+	    rigidB2D.velocity = new Vector2 (rigidB2D.velocity.x, player.JumpHeight);
 	}
 
 	void DoubleJump(){
@@ -75,20 +99,21 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	//Metodo para controlar jogador usando teclas (botao no UI) 
-//	void FixedUpdate(){
-//		float move = Input.GetAxis ("Horizontal");
-//		animator.SetFloat("Speed", Mathf.Abs(move));
-//		rigidB2D.velocity = new Vector2(move * player.MoveSpeed, rigidB2D.velocity.y);
-//
-//		if(move > 0 && !player.FacingRight){
-//			Flip();
-//		}else if (move < 0 && player.FacingRight){
-//			Flip();
-//		}
-//	}
-
-	//Metodo que executa automaticamente
 	void FixedUpdate(){
+	#if UNITY_STANDALONE
+		float move = Input.GetAxis ("Horizontal");
+		animator.SetFloat("Speed", Mathf.Abs(move));
+		rigidB2D.velocity = new Vector2(move * player.MoveSpeed, rigidB2D.velocity.y);
+
+		if(move > 0 && !player.FacingRight){
+			Flip();
+		}else if (move < 0 && player.FacingRight){
+			Flip();
+		}
+	#endif
+
+	//Metodo que player move automaticamente
+	#if UNITY_ANDROID
 		float move = rigidB2D.velocity.x;
 		animator.SetFloat("Speed", move);
 
@@ -99,24 +124,18 @@ public class PlayerController : MonoBehaviour {
 		if(grounded)
 	        doubleJumped = false;
 
-	   // animator.SetFloat("vSpeed", rigidB2D.velocity.y);
-
 		rigidB2D.velocity = new Vector2(player.MoveSpeed, rigidB2D.velocity.y);
 
-
-		 
-
-		//if(!grounded) return;
+		if(!grounded) return;
 
 		animator.SetFloat("Speed", rigidB2D.velocity.x);
+	#endif
 	}
 
 	void OnTriggerEnter2D (Collider2D collider){
-	   var tag = collider.gameObject.tag; 
-	   // Debug.Log("Checked into the Shredder");
+		var tag = collider.gameObject.tag; 
 		if (tag == "Wall"){
 			Flip();
-
 		}
 	}
 }

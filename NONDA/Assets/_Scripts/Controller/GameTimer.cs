@@ -8,6 +8,7 @@ public class GameTimer : MonoBehaviour {
 	public Image timerBar;
 	public float cur_TimerBar = 0f;
 	public float maxTimerBar = 100f;
+	public GameObject alertReference;
 	#endregion
 
 	#region Private Variables
@@ -16,10 +17,11 @@ public class GameTimer : MonoBehaviour {
 
 	void Start () {
 		cur_TimerBar = maxTimerBar;
-		InvokeRepeating("increaseTime", 2f, 2f);
+		InvokeRepeating("increaseTime", 2, 2);
 	}
 
 	void increaseTime(){
+		
 		cur_TimerBar -= 5f;
 		float cal_Timer = cur_TimerBar / maxTimerBar;
 		SetTimeBar(cal_Timer);
