@@ -1,0 +1,146 @@
+fileFormatVersion: 2
+guid: 0c16c01763fca4d699d1218d9ce00007
+timeCreated: 1460515309
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: bird2_walk_205X205_0
+    21300002: bird2_walk_205X205_2
+    21300004: bird2_walk_205X205_1
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 512
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: bird2_walk_205X205_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 205
+        width: 204
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -37, y: 68}
+        - {x: -100, y: -10}
+        - {x: -100, y: -96}
+        - {x: -84, y: -102}
+        - {x: 83, y: -102}
+        - {x: 91, y: -82}
+        - {x: 91, y: 68}
+    - name: bird2_walk_205X205_2
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 205
+        width: 204
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -44, y: -92}
+        - {x: -46, y: -96}
+        - {x: -46, y: -99}
+        - {x: -40, y: -101}
+        - {x: 33, y: -101}
+        - {x: 36, y: -97}
+        - {x: 36, y: -93}
+        - {x: 33, y: -92}
+      - - {x: 102, y: -7}
+        - {x: 102, y: 102}
+        - {x: 52, y: 102}
+        - {x: 4, y: 80}
+        - {x: -93, y: 12}
+        - {x: -93, y: -20}
+        - {x: -82, y: -31}
+        - {x: -79, y: -29}
+        - {x: -73, y: -23}
+        - {x: -69, y: -17}
+        - {x: -45, y: -60}
+        - {x: -3, y: -72}
+        - {x: 4, y: -73}
+        - {x: 21, y: -73}
+        - {x: 27, y: -69}
+        - {x: 88, y: -55}
+    - name: bird2_walk_205X205_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 204
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 27, y: -92}
+        - {x: -48, y: -92}
+        - {x: -48, y: -102}
+        - {x: 32, y: -102}
+        - {x: 34, y: -99}
+        - {x: 34, y: -95}
+        - {x: 30, y: -93}
+      - - {x: 29, y: 82}
+        - {x: -97, y: 11}
+        - {x: -100, y: -7}
+        - {x: -100, y: -25}
+        - {x: -95, y: -28}
+        - {x: -94, y: -40}
+        - {x: -90, y: -48}
+        - {x: -86, y: -48}
+        - {x: -76, y: -38}
+        - {x: -68, y: -54}
+        - {x: -54, y: -81}
+        - {x: 34, y: -81}
+        - {x: 94, y: -56}
+        - {x: 94, y: 59}
+        - {x: 82, y: 82}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

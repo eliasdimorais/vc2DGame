@@ -1,0 +1,120 @@
+fileFormatVersion: 2
+guid: a973837a5213448d1822dc93ded2cf28
+timeCreated: 1460125426
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: bird1_idle_190x162_0
+    21300002: bird1_idle_190x162_1
+    21300004: bird1_idle_190x162_2
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 512
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: bird1_idle_190x162_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 163
+        width: 190
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 3, y: 81}
+        - {x: -88, y: 34}
+        - {x: -88, y: -14}
+        - {x: -73, y: -81}
+        - {x: 49, y: -81}
+        - {x: 77, y: -34}
+        - {x: 77, y: 66}
+        - {x: 68, y: 81}
+    - name: bird1_idle_190x162_1
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 163
+        width: 190
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 25, y: 81}
+        - {x: 16, y: 78}
+        - {x: -86, y: 32}
+        - {x: -88, y: 31}
+        - {x: -88, y: -4}
+        - {x: -67, y: -81}
+        - {x: 52, y: -81}
+        - {x: 78, y: 11}
+        - {x: 78, y: 64}
+        - {x: 57, y: 81}
+    - name: bird1_idle_190x162_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 190
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 52, y: 81}
+        - {x: 8, y: 81}
+        - {x: -88, y: 38}
+        - {x: -88, y: -13}
+        - {x: -65, y: -81}
+        - {x: 49, y: -81}
+        - {x: 61, y: -72}
+        - {x: 78, y: 30}
+        - {x: 78, y: 59}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

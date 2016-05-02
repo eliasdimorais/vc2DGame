@@ -10,11 +10,12 @@ public class LevelManager : MonoBehaviour
 	#endregion
 
 	#region Private Variabless
-	private PlayerController player;
+	private Player player;
+	private SpawnerController spawner;
 	#endregion
 
 	void Start(){
-		player = FindObjectOfType<PlayerController>();
+		player = FindObjectOfType<Player>();
 		if(autoLoadNextLevelAfter <= 0){
 			Debug.Log("Level auto load DISABLED, use a positive number in SECONDS");
 		}else{
@@ -28,7 +29,7 @@ public class LevelManager : MonoBehaviour
 	}
 
 	public void QuitRequest(){
-		Debug.Log ("Quit requested");
+		//Debug.Log ("Quit requested");
 		Application.Quit ();
 	}
 
@@ -37,9 +38,13 @@ public class LevelManager : MonoBehaviour
 	}
 
 	public void RespawnPlayer(){
-		Debug.Log("Player Respawn Here");
+		//Debug.Log("Player Respawn Here");
 		player.transform.position = currentCheckpoint.transform.position;
 	}
+
+//	public void CoroutineSpawn(){
+//		spawner.SpawnEnemy (SceneManager.GetActiveScene().buildIndex);
+//	}
 	
 }
 
