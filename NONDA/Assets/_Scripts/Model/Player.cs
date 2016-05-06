@@ -15,8 +15,8 @@ public class Player : Character {
 	private bool doubleJumped = false;
 	private Vector2 fp; // first finger position
 	private Vector2 lp; // last finger position
-	private float lpX;
-	private float offset = 80; //value where accept touch to calculate swipe
+	private float lpX; //Last position in X
+	private float offset = 70; //value where accept touch to calculate swipe
 	#endregion
 
 	#region Instances 
@@ -146,6 +146,5 @@ public class Player : Character {
 			return health <= 0;
 		}
 	}
-
 	#endregion
 }

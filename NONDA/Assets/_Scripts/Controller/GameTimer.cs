@@ -6,25 +6,27 @@ public class GameTimer : MonoBehaviour {
 
 	#region Public Variables
 	public Image timerBar;
-	public float cur_TimerBar = 0f;
-	public float maxTimerBar = 100f;
+	public float currentTimerBar = 0f;
+	public float maxTimerBar;
 	public GameObject alertReference;
 	#endregion
 
 	#region Private Variables
-	//private bool isEndOfLevel = false;
+	private bool isLevelOver = false;
 	#endregion
 
 	void Start () {
-		cur_TimerBar = maxTimerBar;
+		currentTimerBar = maxTimerBar;
 		InvokeRepeating("increaseTime", 2, 2);
 	}
 
 	void increaseTime(){
-		
-		cur_TimerBar -= 5f;
-		float cal_Timer = cur_TimerBar / maxTimerBar;
+		currentTimerBar -= 5f;
+		float cal_Timer = currentTimerBar / maxTimerBar;
 		SetTimeBar(cal_Timer);
+		if(currentTimerBar == maxTimerBar){
+			isLevelOver = true;
+		}
 	}
 
 	void SetTimeBar (float myTimer) {

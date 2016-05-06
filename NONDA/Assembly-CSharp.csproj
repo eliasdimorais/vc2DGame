@@ -63,6 +63,7 @@
      <Compile Include="Assets\_Scripts\Controller\PauseMenu.cs" />
      <Compile Include="Assets\_Scripts\Controller\PlayerController.cs" />
      <Compile Include="Assets\_Scripts\Controller\PlayerPrefsManager.cs" />
+     <Compile Include="Assets\_Scripts\Controller\QuizController.cs" />
      <Compile Include="Assets\_Scripts\Controller\SpawnerController.cs" />
      <Compile Include="Assets\_Scripts\Controller\TestScript.cs" />
      <Compile Include="Assets\_Scripts\Controller\TouchController.cs" />
@@ -70,6 +71,7 @@
      <Compile Include="Assets\_Scripts\Model\Character.cs" />
      <Compile Include="Assets\_Scripts\Model\Enemy.cs" />
      <Compile Include="Assets\_Scripts\Model\Player.cs" />
+     <Compile Include="Assets\_Scripts\Model\Quiz.cs" />
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
  </Reference>

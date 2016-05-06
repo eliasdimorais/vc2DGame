@@ -8,7 +8,7 @@ public class AttackController : IEnemyState {
 	#region Private variables
 	//AttackState
 	[Range (-1.0f,2.0f)]
-	[SerializeField]private float currentSpeed = 1.0f;
+	//[SerializeField]private float currentSpeed = 1.0f;
 	private Enemy enemy;
 	private float attackTimer;
 	private float attackCoolDown = 3;

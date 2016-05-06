@@ -84,9 +84,5 @@ public abstract class Character : MonoBehaviour {
 		//BeakCollider.enabled = !BeakCollider.enabled;
 	}
 
-	public virtual void OnTriggerEnter2D(Collider2D other){
-		if(other.tag == "Touch"){
-			StartCoroutine(TakeDamage());
-		}
-	}
+
 }

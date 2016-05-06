@@ -64,15 +64,15 @@ public class Enemy : Character {
 		}
 	}
 
-	public override void OnTriggerEnter2D(Collider2D other){
+	void OnTriggerEnter2D(Collider2D other){
 		//base.OnTriggerEnter2D(other);
 		var tag = other.gameObject.tag; 
 		if (tag == "Edge"){
 			ChangeDirection();
 		}
-//		else{
-//			currentState.OnTriggerEnter(other);
-//		}
+		if(other.tag == "Touch"){
+			StartCoroutine(TakeDamage());
+		}
 	}
 
 	#region implemented abstract members of Character

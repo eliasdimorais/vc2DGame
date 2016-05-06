@@ -27,7 +27,7 @@ public class SearchState : IEnemyState {
 		Debug.Log("Searching State");
 		Search();
 		enemy.Move();
-		if(enemy.Target != null && enemy.InAttackMode){ //&& get closes to attack
+		if(enemy.Target != null && !enemy.InAttackMode){ //&& get closes to attack
 			enemy.ChangeState(new RangeState());
 		}
 	}
