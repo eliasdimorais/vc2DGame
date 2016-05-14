@@ -24,7 +24,7 @@ public class SearchState : IEnemyState {
 	#region IEnemyState implementation
 	public void Execute ()
 	{
-		Debug.Log("Searching State");
+		//Debug.Log("Searching State");
 		Search();
 		enemy.Move();
 		if(enemy.Target != null && !enemy.InAttackMode){ //&& get closes to attack

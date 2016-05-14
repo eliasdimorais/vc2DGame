@@ -11,7 +11,7 @@ public class Player : Character {
 
 	#region Private Variables
 	private Vector2 startPosition;
-	private bool grounded;
+	private bool isGrounded;
 	private bool doubleJumped = false;
 	private Vector2 fp; // first finger position
 	private Vector2 lp; // last finger position
@@ -35,7 +35,7 @@ public class Player : Character {
 	public override void Start () {
 		base.Start();
 		startPosition = transform.position;
-		grounded = true;
+		isGrounded = true;
 	    MyRigidBody.freezeRotation = true;
 	}
 
@@ -96,16 +96,15 @@ public class Player : Character {
 		float move = MyRigidBody.velocity.x;
 		MyAnimator.SetFloat("Speed", move);
 
-	    grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+	    isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 
-	    //MyAnimator.SetBool("Grounded", grounded);
+	    //MyAnimator.SetBool("Grounded", isGrounded);
+		//if(!isGrounded) return;
 
-		if(grounded)
+		if(isGrounded)
 	        doubleJumped = false;
 
 		MyRigidBody.velocity = new Vector2(Instance.MoveSpeed, MyRigidBody.velocity.y);
-
-		//if(!grounded) return;
 
 		MyAnimator.SetFloat("Speed", MyRigidBody.velocity.x);
 	#endif
@@ -113,9 +112,10 @@ public class Player : Character {
 
 	void Jump(){
 		MyAnimator.SetTrigger("SetJump");
+	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, instance.JumpForce);
+
 		//MyAnimator.SetBool("Grounded", false);
 		//rigidB2D.AddForce(new Vector2(0, player.JumpHeight));
-	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, instance.JumpForce);
 	}
 
 	void DoubleJump(){
@@ -123,6 +123,7 @@ public class Player : Character {
 	    doubleJumped = true;
 	}
 
+	//collide wit the Wall
 	void OnTriggerEnter2D (Collider2D other){
 		var tag = other.gameObject.tag; 
 		if (tag == "Wall"){
@@ -130,6 +131,7 @@ public class Player : Character {
 		}
 	} 
 
+	//check groundcheck
 	void OnDrawGizmos() {
         Gizmos.color = Color.yellow;
 		Gizmos.DrawSphere(groundCheck.position, groundRadius);
@@ -138,13 +140,18 @@ public class Player : Character {
 	#region implemented abstract members of Character
 	public override IEnumerator TakeDamage ()
 	{
-		yield return null;
-	}
+		//yield return null;
+		//new script
+		MyAnimator.SetTrigger("Hit");
+		totalLife -= enemyDamageValue; 
+		yield return totalLife; 
+	}	
 
 	public override bool IsDead {
 		get {
-			return health <= 0;
+			return totalLife <= 0;
 		}
 	}
 	#endregion
+
 }

@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
 	void Start(){
 		player = FindObjectOfType<Player>();
 		if(autoLoadNextLevelAfter <= 0){
-			Debug.Log("Level auto load DISABLED, use a positive number in SECONDS");
+			//Debug.Log("Level auto load DISABLED, use a positive number in SECONDS");
 		}else{
 			Invoke ("LoadNextLevel", autoLoadNextLevelAfter);
 		}	

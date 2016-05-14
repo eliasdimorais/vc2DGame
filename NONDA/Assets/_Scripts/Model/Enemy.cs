@@ -6,7 +6,8 @@ public class Enemy : Character {
 	#region Private variable
 	private IEnemyState currentState;
 	[SerializeField]private float fightRange;
-	public float movementSpeed = 1.3f;
+	[SerializeField] private EdgeCollider2D BeakCollider;
+	[SerializeField] private float movementSpeed;
 	#endregion
 	#region Public variable
 	public GameObject Target {get; set;}
@@ -27,11 +28,10 @@ public class Enemy : Character {
 	}
 
 	void Update () {
-		if(!IsDead){
+		if(!IsDead /*&& !GameTimer.IsTimerOut()*/){
 			currentState.Execute();
 			//LookAtTheTarget();
 		}
-
 	}
 
 	public void Move(){
@@ -70,9 +70,10 @@ public class Enemy : Character {
 		if (tag == "Edge"){
 			ChangeDirection();
 		}
-		if(other.tag == "Touch"){
-			StartCoroutine(TakeDamage());
-		}
+	}
+
+	void OnCollisionEnter2D(Collision2D touchCollision){
+		
 	}
 
 	#region implemented abstract members of Character
@@ -81,9 +82,10 @@ public class Enemy : Character {
 	{
 		for (int i = 0; i < Input.touchCount; ++i) {
             if (Input.GetTouch(i).phase == TouchPhase.Began)
-				health -= 10;
+				totalLife -= playerDamageValue;
 			if(!IsDead){
 				MyAnimator.SetTrigger("Damage");
+				Debug.Log("Dead");
 			}
 			else{
 				MyAnimator.SetTrigger("Dead");
@@ -95,7 +97,7 @@ public class Enemy : Character {
 
 	public override bool IsDead {
 		get {
-			return health <= 0;
+			return totalLife <= 0;
 		}
 	}
 	#endregion

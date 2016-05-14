@@ -100,7 +100,7 @@ public class SpawnerController : MonoBehaviour {
 		}
 	}
 	IEnumerator SpawnWave(Wave _wave){
-		Debug.Log("Spawing Wave "+ _wave.name);
+		//Debug.Log("Spawing Wave "+ _wave.name);
 		state = SpawnState.SPAWNING;
 		for (int i = 0; i < _wave.count; i++)
 		{
@@ -115,7 +115,7 @@ public class SpawnerController : MonoBehaviour {
 
 	//public void SpawnEnemy(int levelFase){	
 	public void SpawnEnemy(Transform _enemy){		
-		Debug.Log("Spawning Enemy: " + _enemy.name);
+		//Debug.Log("Spawning Enemy: " + _enemy.name);
 		Transform _esp = enemySpawnPoint[ Random.Range (0, enemySpawnPoint.Length) ]; //choose random point declared on the Unity Editor
 		Instantiate(_enemy, _esp.position, _esp.rotation);
 //		for (int i = 0; i < level[levelFase].enemy.Length; i++) {

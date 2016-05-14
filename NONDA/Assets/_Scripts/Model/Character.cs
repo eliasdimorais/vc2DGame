@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public abstract class Character : MonoBehaviour {
 	#region Protected Variables
-	[SerializeField] protected float health;
+	[SerializeField] protected float totalLife;
+	[SerializeField] protected float enemyDamageValue;
+	[SerializeField] protected float playerDamageValue; //sera contabilizado no touch (O real player, nao a minhoca)
 	protected bool facingRight;
 	protected Rigidbody2D MyRigidBody{get; set;}
 	#endregion
@@ -16,13 +19,11 @@ public abstract class Character : MonoBehaviour {
 	public abstract bool IsDead {get;}
 	#endregion
 	#region Private Variables
+	[SerializeField] protected Text lifeText;
 	[Range (-3f, 3f)][SerializeField] private float moveSpeed;
 	[Range (0f, 18f)][SerializeField] private float jumpForce;
-	[SerializeField] private EdgeCollider2D BeakCollider;
 	//[SerializeField] private Transform acidBombPosition;
 	//[SerializeField] private GameObject acidBombPrefab;
-
-
 	#endregion
 
 	public float MoveSpeed{
@@ -40,8 +41,16 @@ public abstract class Character : MonoBehaviour {
 		set {facingRight = value;}
 	}
 
-	public float Life{get; set;}
-
+	public float Life{
+		get{
+			return totalLife;
+		}
+		set 
+		{
+			lifeText.text = value.ToString();
+			this.totalLife = value;
+		}
+	}
 
 	public bool Attack{get; set;}
 
