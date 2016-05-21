@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class SpawnerController : MonoBehaviour {
+
 	#region Public Variables
 	public enum SpawnState{SPAWNING, WAITING, COUNTING};
 	[System.Serializable]
@@ -12,19 +13,12 @@ public class SpawnerController : MonoBehaviour {
 		public float rate; // 
 	}
 	public Wave[] waves;
+//	private GameObject parent;
+//	private Enemy enemies;
 
 	public float timeBetweenWaves = 5f;
 	public float waveCountdown;
 	public Transform[] enemySpawnPoint;
-	//public LevelSpawn[] level;
-
-//	[System.Serializable]
-//	public class LevelSpawn{
-//		public int[] enemyPosition;
-//		public int[] enemy;
-//	}
-	//public Transform[] respawn;
-	//public GameObject[] enemiesPrefab;
 	#endregion
 
 	#region Private Variables
@@ -35,6 +29,14 @@ public class SpawnerController : MonoBehaviour {
 
 
 	void Start(){
+//		parent = GameObject.Find ("Enemies");
+//		Debug.Log(parent);
+//		enemies = GameObject.FindObjectOfType<Enemy>();
+//	
+//		if (!parent) {
+//			parent = new GameObject("Enemies");
+//		}
+
 		if(waves.Length == 0){
 			Debug.LogError("No WAVES HAS BEEN FOUND. ");
 		}
@@ -47,28 +49,21 @@ public class SpawnerController : MonoBehaviour {
 	}
 
 	void Update(){
-		if(state == SpawnState.WAITING)
-		{
-			if(!EnemyIsAlive())
-			{
+		if(state == SpawnState.WAITING){
+			if(!EnemyIsAlive()){
 				WaveCompleted();
 				Debug.Log ("Wave completed");
 
 				//Update Points 
-			}else
-			{
+			}else{
 				return;
 			}
 		}
-		if(waveCountdown <= 0)
-		{
-			if (state != SpawnState.SPAWNING)
-			{
+		if(waveCountdown <= 0){
+			if (state != SpawnState.SPAWNING){
 				StartCoroutine( SpawnWave( waves[nextWave] ) );
 			}
-		}
-		else
-		{
+		}else{
 			waveCountdown -= Time.deltaTime;
 		}
 	}
@@ -76,11 +71,9 @@ public class SpawnerController : MonoBehaviour {
 	#region Enemy Spawner
 	bool EnemyIsAlive(){
 		searchCountdown -= Time.deltaTime;
-		if(searchCountdown <= 0f)
-		{
+		if(searchCountdown <= 0f){
 			searchCountdown = 1f;
-			if(GameObject.FindGameObjectWithTag ("Enemy") == null)
-			{
+			if(GameObject.FindGameObjectWithTag ("Enemy") == null){
 				return false;
 			}
 		}
@@ -99,6 +92,7 @@ public class SpawnerController : MonoBehaviour {
 			nextWave++;
 		}
 	}
+
 	IEnumerator SpawnWave(Wave _wave){
 		//Debug.Log("Spawing Wave "+ _wave.name);
 		state = SpawnState.SPAWNING;
@@ -112,8 +106,6 @@ public class SpawnerController : MonoBehaviour {
 		yield break; // sempre usar quando tiver usando IEnumerator
 	}
 
-
-	//public void SpawnEnemy(int levelFase){	
 	public void SpawnEnemy(Transform _enemy){		
 		//Debug.Log("Spawning Enemy: " + _enemy.name);
 		Transform _esp = enemySpawnPoint[ Random.Range (0, enemySpawnPoint.Length) ]; //choose random point declared on the Unity Editor

@@ -60,23 +60,18 @@ public abstract class Character : MonoBehaviour {
 		MyRigidBody = GetComponent<Rigidbody2D>();
 	}
 
-	void Update(){
-
-	}
-
-	public abstract IEnumerator TakeDamage();
+	public abstract IEnumerator DealDamage();
 
 	//Make Character change to oposite direction
 	public void ChangeDirection(){
 		#if UNITY_ANDROID
-		facingRight = !facingRight;
-		MoveSpeed *= -1;
-		//transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
+			facingRight = !facingRight;
+			MoveSpeed *= -1;
+			Vector3 theScale = transform.localScale;
+			theScale.x *= -1;
+			transform.localScale = theScale;
 		#endif
-	}
+		}
 
 	public void ThrowAcidBomb(int value){
 //		if(facingRight){

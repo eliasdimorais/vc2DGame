@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameTimer : MonoBehaviour {
@@ -24,9 +25,13 @@ public class GameTimer : MonoBehaviour {
 		currentTimerBar -= 5f;
 		float cal_Timer = currentTimerBar / maxTimerBar;
 		SetTimeBar(cal_Timer);
-		if(currentTimerBar == maxTimerBar){
+		if(currentTimerBar == 0){
 			isLevelOver = true;
 		}
+		if(isLevelOver == true){
+				SceneManager.LoadScene("02_Quiz");
+		}
+
 	}
 
 	void SetTimeBar (float myTimer) {

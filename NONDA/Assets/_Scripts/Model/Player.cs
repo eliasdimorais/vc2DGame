@@ -10,13 +10,14 @@ public class Player : Character {
 	#endregion
 
 	#region Private Variables
-	private Vector2 startPosition;
+//	private Vector2 startPosition;
 	private bool isGrounded;
 	private bool doubleJumped = false;
 	private Vector2 fp; // first finger position
 	private Vector2 lp; // last finger position
-	private float lpX; //Last position in X
-	private float offset = 70; //value where accept touch to calculate swipe
+	//private float lpX; //Last position in X
+	private int offset = 70; //value where accept touch to calculate swipe
+	private float moveSpeedTemp;
 	#endregion
 
 	#region Instances 
@@ -34,83 +35,74 @@ public class Player : Character {
 
 	public override void Start () {
 		base.Start();
-		startPosition = transform.position;
+		//startPosition = transform.position;
 		isGrounded = true;
 	    MyRigidBody.freezeRotation = true;
 	}
 
 	void Update(){
-	#if UNITY_ANDROID
-		foreach(Touch touch in Input.touches){
-			if (touch.phase == TouchPhase.Began){
-				fp = touch.position;
-				lp = touch.position;
-				lpX = lp.x;
-			}
-			if (touch.phase == TouchPhase.Moved ){
-				lp = touch.position;
-			}
-			if(touch.phase == TouchPhase.Ended){
-				if((fp.x - lp.x) > offset) // left swipe
-				{
-					ChangeDirection();
-					//MyRigidBody.MoveRotation(MyRigidBody.rotation + Instance.MoveSpeed * Time.fixedDeltaTime);
+		#if UNITY_ANDROID
+			moveSpeedTemp = 0f;
+			foreach(Touch touch in Input.touches){
+				if (touch.phase == TouchPhase.Began){
+					fp = touch.position;
+					lp = touch.position;
+					//lpX = lp.x;
 				}
-				else if((fp.x - lp.x) < offset * -1) // right swipe
-				{
-					ChangeDirection();
-					//MyRigidBody.MoveRotation(MyRigidBody.rotation + Instance.MoveSpeed * Time.fixedDeltaTime);
+				if (touch.phase == TouchPhase.Moved ){
+					lp = touch.position;
 				}
-				else if((fp.y - lp.y) < offset * -1  ) // up swipe
-				{
-					Jump();
-				}
-			}
-		}
-	#elif UNITY_EDITOR
-		if(Input.GetButtonDown("Jump") && grounded){
-	        Jump();
-	    }
-	    if(Input.GetButtonDown("Jump") && !doubleJumped && !grounded){
-	        DoubleJump();
-	    }
-	#endif
-	}
+				if(touch.phase == TouchPhase.Ended){
+					if(touch.position.x < Screen.width/2){ //is it swiping the left side? so, it's directional controller
+						if((fp.x - lp.x) > offset && !facingRight || (fp.x - lp.x) < offset * -1 && facingRight ) //I am going to the same direction that the user swipe?
+						{ 
+							moveSpeedTemp = 0.2f;
+							MoveSpeed  = MoveSpeed + moveSpeedTemp;
+						}
+						else if ((fp.x - lp.x) > offset && facingRight || (fp.x - lp.x) < offset * -1 && !facingRight ) // right swipe
+						{
+							ChangeDirection();
+						}
+					}
 
+					if (touch.position.x > Screen.width/2){ //is it swiping the right side? so it's jumping
+						if((fp.y - lp.y) < offset * -1  ) // up swipe
+						{
+							Jump();
+						}
+					}
+				}
+			}
+			if(Input.GetButtonDown("Horizontal")){
+					ChangeDirection();
+			}
+			if(Input.GetButtonDown("Jump") && isGrounded){
+			        Jump();
+			}
+			if(Input.GetButtonDown("Jump") && !doubleJumped && !isGrounded){
+			        DoubleJump();
+			}   
+		#endif
+	}
 	//Metodo para controlar jogador usando teclas (botao no UI) 
 	void FixedUpdate(){
-	#if UNITY_STANDALONE
-		float move = Input.GetAxis ("Horizontal");
-		animator.SetFloat("Speed", Mathf.Abs(move));
-		rigidB2D.velocity = new Vector2(move * player.MoveSpeed, rigidB2D.velocity.y);
+		//Metodo que player move automaticamente
+		#if UNITY_ANDROID
+			float move = MyRigidBody.velocity.x;
+			MyAnimator.SetFloat("Speed", move);
 
-		if(move > 0 && !player.FacingRight){
-			Flip();
-		}else if (move < 0 && player.FacingRight){
-			Flip();
-		}
-	#endif
+		    isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 
-	//Metodo que player move automaticamente
-	#if UNITY_ANDROID
-		float move = MyRigidBody.velocity.x;
-		MyAnimator.SetFloat("Speed", move);
+			if(isGrounded)
+		        doubleJumped = false;
 
-	    isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+			MyRigidBody.velocity = new Vector2(Instance.MoveSpeed, MyRigidBody.velocity.y);
 
-	    //MyAnimator.SetBool("Grounded", isGrounded);
-		//if(!isGrounded) return;
-
-		if(isGrounded)
-	        doubleJumped = false;
-
-		MyRigidBody.velocity = new Vector2(Instance.MoveSpeed, MyRigidBody.velocity.y);
-
-		MyAnimator.SetFloat("Speed", MyRigidBody.velocity.x);
-	#endif
+			MyAnimator.SetFloat("Speed", MyRigidBody.velocity.x);
+		#endif
 	}
 
-	void Jump(){
+	public void Jump(){
 		MyAnimator.SetTrigger("SetJump");
 	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, instance.JumpForce);
 
@@ -118,7 +110,7 @@ public class Player : Character {
 		//rigidB2D.AddForce(new Vector2(0, player.JumpHeight));
 	}
 
-	void DoubleJump(){
+	public void DoubleJump(){
 	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, instance.JumpForce);
 	    doubleJumped = true;
 	}
@@ -138,20 +130,36 @@ public class Player : Character {
     }
 
 	#region implemented abstract members of Character
-	public override IEnumerator TakeDamage ()
+
+	#region implemented abstract members of Character
+
+	public override IEnumerator DealDamage ()
 	{
-		//yield return null;
-		//new script
-		MyAnimator.SetTrigger("Hit");
-		totalLife -= enemyDamageValue; 
-		yield return totalLife; 
-	}	
+		throw new System.NotImplementedException ();
+	}
 
 	public override bool IsDead {
 		get {
-			return totalLife <= 0;
+			throw new System.NotImplementedException ();
 		}
 	}
+
+	#endregion
+	public void TakeDamage (int damage)
+	{
+
+		totalLife -= damage;
+
+		if(totalLife > 0){
+			//criar playerBlink
+			//invocar repeticao com SpriteRenderer  (!oposto) 
+			MyAnimator.SetTrigger("Hit");
+		}else{
+			MyAnimator.SetTrigger("Dead");
+		}  
+	}	
+
+
 	#endregion
 
 }

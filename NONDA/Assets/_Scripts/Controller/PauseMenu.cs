@@ -5,24 +5,21 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour {
 
 	#region Public Variables
-	public string levelSelect;
+	//public string levelSelect;
 	//public string mainMenu;
 	public bool isPaused;
 	public GameObject pauseMenuCanvas;
 	#endregion
 
-
-	void Update () {
-		if(isPaused){
+	public void Pause(){
+		if(Time.timeScale == 1){
+			isPaused = true;
+			Time.timeScale = 0;
 			pauseMenuCanvas.SetActive(true);
-			Time.timeScale = 0f;
-		}else{
-			pauseMenuCanvas.SetActive(false);
-			Time.timeScale = 1f;
-		}
-
-		if(Input.GetKeyDown(KeyCode.Escape)){
+		}else if(Time.timeScale == 0){
 			isPaused = !isPaused;
+			Time.timeScale = 1;
+			pauseMenuCanvas.SetActive(false);
 		}
 	}
 

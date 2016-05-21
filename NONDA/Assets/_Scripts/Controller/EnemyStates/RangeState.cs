@@ -21,6 +21,7 @@ public class RangeState : IEnemyState {
 	{
 		if (enemy.Target != null){
 			enemy.Move();
+			Debug.Log("Inimigo "+ enemy.name);
 		}
 		else if(enemy.InAttackMode){
 			enemy.ChangeState(new AttackController());

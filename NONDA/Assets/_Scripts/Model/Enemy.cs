@@ -6,11 +6,12 @@ public class Enemy : Character {
 	#region Private variable
 	private IEnemyState currentState;
 	[SerializeField]private float fightRange;
-	[SerializeField] private EdgeCollider2D BeakCollider;
+	[SerializeField] private EdgeCollider2D beakCollider;
 	[SerializeField] private float movementSpeed;
 	#endregion
 	#region Public variable
 	public GameObject Target {get; set;}
+
 	public bool InAttackMode{
 		get
 		{
@@ -69,6 +70,8 @@ public class Enemy : Character {
 		var tag = other.gameObject.tag; 
 		if (tag == "Edge"){
 			ChangeDirection();
+		}else if(tag == "Player"){
+			Player.Instance.DealDamage();
 		}
 	}
 
@@ -78,7 +81,7 @@ public class Enemy : Character {
 
 	#region implemented abstract members of Character
 
-	public override IEnumerator TakeDamage ()
+	public override IEnumerator DealDamage ()
 	{
 		for (int i = 0; i < Input.touchCount; ++i) {
             if (Input.GetTouch(i).phase == TouchPhase.Began)

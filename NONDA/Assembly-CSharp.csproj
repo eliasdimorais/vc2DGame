@@ -55,8 +55,10 @@
      <Compile Include="Assets\_Scripts\Controller\EnemyStates\IdleState.cs" />
      <Compile Include="Assets\_Scripts\Controller\EnemyStates\RangeState.cs" />
      <Compile Include="Assets\_Scripts\Controller\EnemyStates\SearchState.cs" />
+     <Compile Include="Assets\_Scripts\Controller\GameManager.cs" />
      <Compile Include="Assets\_Scripts\Controller\GameTimer.cs" />
      <Compile Include="Assets\_Scripts\Controller\IgnoreCollision.cs" />
+     <Compile Include="Assets\_Scripts\Controller\ItemController.cs" />
      <Compile Include="Assets\_Scripts\Controller\LevelManager.cs" />
      <Compile Include="Assets\_Scripts\Controller\MusicManager.cs" />
      <Compile Include="Assets\_Scripts\Controller\OptionsController.cs" />
@@ -67,9 +69,9 @@
      <Compile Include="Assets\_Scripts\Controller\SpawnerController.cs" />
      <Compile Include="Assets\_Scripts\Controller\TestScript.cs" />
      <Compile Include="Assets\_Scripts\Controller\TouchController.cs" />
-     <Compile Include="Assets\_Scripts\Model\AcidBomb.cs" />
      <Compile Include="Assets\_Scripts\Model\Character.cs" />
      <Compile Include="Assets\_Scripts\Model\Enemy.cs" />
+     <Compile Include="Assets\_Scripts\Model\Item.cs" />
      <Compile Include="Assets\_Scripts\Model\Player.cs" />
      <Compile Include="Assets\_Scripts\Model\Quiz.cs" />
  <Reference Include="UnityEngine.Advertisements">

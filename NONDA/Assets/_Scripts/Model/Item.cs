@@ -10,21 +10,13 @@ public abstract class Item : MonoBehaviour {
 		private set;
 	}
 
-   	public abstract IEnumerator TakeDamage();
-
-	void Start () {
-	
-	}
-
-	void Update () {
-	
-	}
-
+   	public abstract IEnumerator DealDamage();
+   
 	void Inicialize(Transform position){
 
 	}
 
-	public bool IsDead {
+	public bool IsFoodOutNutrition {
 		get {
 			return totalValue <= 0;
 		}
