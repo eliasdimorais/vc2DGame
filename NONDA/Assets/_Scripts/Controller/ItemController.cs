@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemController : Item {
+public class ItemController : MonoBehaviour {
 
 	#region Public Variables
 	public enum SpawnState{SPAWNING, WAITING, COUNTING};
@@ -26,6 +26,7 @@ public class ItemController : Item {
 	private Item itemFolder;
 	private int nextWave = 0;
 	private SpawnState state = SpawnState.COUNTING;
+	private float searchCountdown = 1f; 
 	#endregion
 
 
@@ -49,16 +50,13 @@ public class ItemController : Item {
 	}
 
 	void Update(){
-		if(state == SpawnState.WAITING)
-		{
-			if(!IsFoodOutNutrition)
-			{
+		if(state == SpawnState.WAITING){
+			if(!ItemHasEnergy()){
 				WaveCompleted();
 				Debug.Log ("Wave completed");
 
 				//Update Points 
-			}else
-			{
+			}else{
 				return;
 			}
 		}
@@ -76,6 +74,16 @@ public class ItemController : Item {
 	}
 
 	#region Item Spawner
+	bool ItemHasEnergy(){
+		searchCountdown -= Time.deltaTime;
+		if(searchCountdown <= 0f){
+			searchCountdown = 1f;
+			if(GameObject.FindGameObjectWithTag ("Item") == null){
+				return false;
+			}
+		}
+		return true;
+	}
 
 	IEnumerator SpawnWave(Wave _wave){
 		state = SpawnState.SPAWNING;
@@ -92,24 +100,6 @@ public class ItemController : Item {
 	public void SpawnItem(Transform _item){		
 		Transform _esp = itemSpawnPoint[ Random.Range (0, itemSpawnPoint.Length) ]; //choose random point declared on the Unity Editor
 		Instantiate(_item, _esp.position, _esp.rotation);
-	}
-
-	public override IEnumerator DealDamage ()
-	{
-		for (int i = 0; i < Input.touchCount; ++i) {
-            if (Input.GetTouch(i).phase == TouchPhase.Began)
-				totalValue -= itemDamageValue;
-			if(!IsFoodOutNutrition){
-				MyAnimator.SetTrigger("Damage");
-				Debug.Log("Tomando Danos");
-			}
-			else{
-				MyAnimator.SetTrigger("Dead");
-				Debug.Log("Dead");
-				yield return null;
-			}
-        }	
-		yield return null;	
 	}
 
 	void WaveCompleted(){
