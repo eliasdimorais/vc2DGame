@@ -8,9 +8,10 @@ public class Enemy : Character {
 	[SerializeField]private float fightRange;
 	[SerializeField] private EdgeCollider2D beakCollider;
 	[SerializeField] private float movementSpeed;
+	[SerializeField] private uint damageValue;
 	#endregion
 	#region Public variable
-	public GameObject Target {get; set;}
+	public GameObject Target { get; set;}
 
 	public bool InAttackMode{
 		get
@@ -25,13 +26,16 @@ public class Enemy : Character {
 
 	public override void Start () {
 		base.Start();
+		Player.Instance.Dead += new DeadEventHandler(RemoveTarget);
 		ChangeState(new IdleState());
 	}
 
 	void Update () {
 		if(!IsDead /*&& !GameTimer.IsTimerOut()*/){
-			currentState.Execute();
-			//LookAtTheTarget();
+			//if(!TakingDamage){
+				currentState.Execute();
+			//}
+			FollowTarget();
 		}
 	}
 
@@ -49,7 +53,7 @@ public class Enemy : Character {
 		currentState = newState;
 
 		currentState.Enter(this);
-	}
+	}  
 
 	public Vector2 GetDirection(){
 		return facingRight ? Vector2.right : Vector2.left;
@@ -60,9 +64,13 @@ public class Enemy : Character {
 			float xDir = Target.transform.position.x - transform.position.x;
 			if(xDir < 0 && facingRight || xDir > 0 && !facingRight){
 					ChangeDirection();
-
 			}
 		}
+	}
+
+	public void RemoveTarget(){
+		Target = null;
+		ChangeState(new SearchState());
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
@@ -71,21 +79,18 @@ public class Enemy : Character {
 		if (tag == "Edge"){
 			ChangeDirection();
 		}else if(tag == "Player"){
-			Player.Instance.DealDamage();
+			Debug.Log("Entrou no Dano, Colidiu com a Suzana.. aiaiai");
+			Player.Instance.DealDamage(damageValue);
 		}
-	}
-
-	void OnCollisionEnter2D(Collision2D touchCollision){
-		
 	}
 
 	#region implemented abstract members of Character
 
-	public override IEnumerator DealDamage ()
+	public override IEnumerator DealDamage (uint damage)
 	{
 		for (int i = 0; i < Input.touchCount; ++i) {
             if (Input.GetTouch(i).phase == TouchPhase.Began)
-				totalLife -= playerDamageValue;
+				totalLife -= damage;
 			if(!IsDead){
 				MyAnimator.SetTrigger("Damage");
 				Debug.Log("Dead");

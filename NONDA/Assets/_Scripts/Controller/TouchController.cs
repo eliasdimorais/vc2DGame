@@ -11,7 +11,7 @@ public class TouchController : MonoBehaviour {
 
 	void Awake () {
 		gameObject.GetComponent<SpriteRenderer>().sprite = mySprite;
-		Debug.Log(touchCount);
+		//Debug.Log(touchCount);
 	}
 
 	void OnMouseDown () {
@@ -22,7 +22,7 @@ public class TouchController : MonoBehaviour {
 			DestroyObject(gameObject);
 			switch(itemType){
 				case ItemType.BANANA:
-					
+					//Animacao de Dano e adicionar + numero 
 					break;
 				case ItemType.BREAD:
 					break;
@@ -31,6 +31,7 @@ public class TouchController : MonoBehaviour {
 				case ItemType.LETTUCE:
 					break;	
 			}
+
 		}
 //		Debug.Log("Entrou aqui "  + gameObject.name); //NAO DELETAR
 //		ItemController.DestroyObject(gameObject);	 //NAO DELETAR

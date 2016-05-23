@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public delegate void DeadEventHandler();
+
 public class Player : Character {
 
 	#region Public Ground Variables
 	public Transform groundCheck;
 	public float groundRadius;
 	public LayerMask whatIsGround;
+	public event DeadEventHandler Dead;
 	#endregion
 
 	#region Private Variables
@@ -18,6 +21,10 @@ public class Player : Character {
 	//private float lpX; //Last position in X
 	private int offset = 70; //value where accept touch to calculate swipe
 	private float moveSpeedTemp;
+	private bool immortal = false;
+	[Range (0f, 3f)][SerializeField]private float immortalTime;
+	[SerializeField]private SpriteRenderer spriteRenderer;
+
 	#endregion
 
 	#region Instances 
@@ -36,12 +43,15 @@ public class Player : Character {
 	public override void Start () {
 		base.Start();
 		//startPosition = transform.position;
+		spriteRenderer = GetComponent<SpriteRenderer>();
 		isGrounded = true;
 	    MyRigidBody.freezeRotation = true;
+
 	}
 
 	void Update(){
 		#if UNITY_ANDROID
+			if(!IsDead){
 			moveSpeedTemp = 0f;
 			foreach(Touch touch in Input.touches){
 				if (touch.phase == TouchPhase.Began){
@@ -81,13 +91,15 @@ public class Player : Character {
 			}
 			if(Input.GetButtonDown("Jump") && !doubleJumped && !isGrounded){
 			        DoubleJump();
-			}   
+			} 
+		}  
 		#endif
 	}
 	//Metodo para controlar jogador usando teclas (botao no UI) 
 	void FixedUpdate(){
 		//Metodo que player move automaticamente
 		#if UNITY_ANDROID
+		if(!IsDead){
 			float move = MyRigidBody.velocity.x;
 			MyAnimator.SetFloat("Speed", move);
 
@@ -99,6 +111,7 @@ public class Player : Character {
 			MyRigidBody.velocity = new Vector2(Instance.MoveSpeed, MyRigidBody.velocity.y);
 
 			MyAnimator.SetFloat("Speed", MyRigidBody.velocity.x);
+		}
 		#endif
 	}
 
@@ -127,39 +140,49 @@ public class Player : Character {
 	void OnDrawGizmos() {
         Gizmos.color = Color.yellow;
 		Gizmos.DrawSphere(groundCheck.position, groundRadius);
-    }
+         }
 
 	#region implemented abstract members of Character
-
-	#region implemented abstract members of Character
-
-	public override IEnumerator DealDamage ()
+	public override IEnumerator DealDamage (uint damage)
 	{
-		throw new System.NotImplementedException ();
+		Debug.Log("Suzaninha");
+
+		if(!immortal){
+			totalLife -= damage;
+			if(!IsDead){
+				immortal = true;
+				yield return new WaitForSeconds(immortalTime);
+				immortal = false;
+				MyAnimator.SetTrigger("Hit");
+			}
+		}else{
+			MyAnimator.SetLayerWeight(1,0);
+			MyAnimator.SetTrigger("Dead");
+		} 
+	}
+	#endregion
+	private IEnumerator IndicateImmortal(){
+		while (!immortal){
+			spriteRenderer.enabled = false;
+			yield return new WaitForSeconds(.1f);
+			spriteRenderer.enabled = true;
+			yield return new WaitForSeconds (.1f);
+		}
 	}
 
 	public override bool IsDead {
 		get {
-			throw new System.NotImplementedException ();
+			if(totalLife <= 0){
+				OnDead();
+			}
+
+			return totalLife <= 0;
 		}
 	}
 
-	#endregion
-	public void TakeDamage (int damage)
-	{
-
-		totalLife -= damage;
-
-		if(totalLife > 0){
-			//criar playerBlink
-			//invocar repeticao com SpriteRenderer  (!oposto) 
-			MyAnimator.SetTrigger("Hit");
-		}else{
-			MyAnimator.SetTrigger("Dead");
-		}  
-	}	
-
-
-	#endregion
-
+	public void OnDead(){
+		if(Dead != null){
+			Dead();
+		}
+	}
 }

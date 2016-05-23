@@ -49,6 +49,7 @@
      <Compile Include="Assets\_Scripts\Controller\Camera\CameraFollow.cs" />
      <Compile Include="Assets\_Scripts\Controller\Camera\Controller2D.cs" />
      <Compile Include="Assets\_Scripts\Controller\Checkpoint.cs" />
+     <Compile Include="Assets\_Scripts\Controller\EnemyDamageController.cs" />
      <Compile Include="Assets\_Scripts\Controller\EnemySight.cs" />
      <Compile Include="Assets\_Scripts\Controller\EnemyStates\AttackController.cs" />
      <Compile Include="Assets\_Scripts\Controller\EnemyStates\IEnemyState.cs" />

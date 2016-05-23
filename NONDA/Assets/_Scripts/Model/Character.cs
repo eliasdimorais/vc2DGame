@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public abstract class Character : MonoBehaviour {
 	#region Protected Variables
 	[SerializeField] protected float totalLife;
-	[SerializeField] protected float enemyDamageValue;
-	[SerializeField] protected float playerDamageValue; //sera contabilizado no touch (O real player, nao a minhoca)
 	protected bool facingRight;
 	protected Rigidbody2D MyRigidBody{get; set;}
 	#endregion
@@ -54,13 +52,15 @@ public abstract class Character : MonoBehaviour {
 
 	public bool Attack{get; set;}
 
+	public bool TakingDamage {get; set;}
+
 	public virtual void Start(){
 		facingRight = true;
 		MyAnimator = GetComponent<Animator>();
 		MyRigidBody = GetComponent<Rigidbody2D>();
 	}
 
-	public abstract IEnumerator DealDamage();
+	public abstract IEnumerator DealDamage(uint damage);
 
 	//Make Character change to oposite direction
 	public void ChangeDirection(){

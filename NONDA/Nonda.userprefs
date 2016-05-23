@@ -1,13 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" GitUserInfo="UsingGIT" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_Scripts/Controller/SpawnerController.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="Assets/_Scripts/Controller/PauseMenu.cs" Line="21" Column="4" />
-      <File FileName="Assets/_Scripts/Controller/SpawnerController.cs" Line="15" Column="1" />
-      <File FileName="../../../../../../Desktop/repository/Unity/GlitchGarden/Assets/Scripts/DefenderSpawner.cs" Line="15" Column="2" />
-      <File FileName="../../../../../../Desktop/repository/Unity/GlitchGarden/Assets/Scripts/PauseMenu.cs" Line="18" Column="4" />
+      <File FileName="Assets/_Scripts/Controller/SpawnerController.cs" Line="17" Column="1" />
+      <File FileName="Assets/_Scripts/Model/Character.cs" Line="1" Column="1" />
+      <File FileName="Assets/_Scripts/Model/Player.cs" Line="189" Column="1" />
       <File FileName="Assets/_Scripts/Controller/TouchController.cs" Line="1" Column="1" />
-      <File FileName="Assets/_Scripts/Controller/ItemController.cs" Line="33" Column="3" />
+      <File FileName="Assets/_Scripts/Model/Enemy.cs" Line="83" Column="25" />
+      <File FileName="Assets/_Scripts/Controller/ItemController.cs" Line="104" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
