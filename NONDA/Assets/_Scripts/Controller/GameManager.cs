@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
 	#region Private variables
 	private static GameManager instance; 
-	[SerializeField] private GameObject itemPrefab; 
+//	[SerializeField] 
+	private GameObject itemPrefab; 
 	[SerializeField] private Text itemText;
 	[SerializeField] private Text scoreText;
+	[SerializeField] private uint pointsToNextLevel;
 	private int collectedItem;
 	private float searchCountdown = 1f;
 	private float point = 0;
@@ -16,8 +19,33 @@ public class GameManager : MonoBehaviour {
 
 
 	void Awake(){
-		scoreText.text = point.ToString("0000000");
+		scoreText.text = point.ToString("000000");
 	}
+
+
+	public void UpdateScore(float points){
+		point += points;
+		scoreText.text = point.ToString("000000");
+	}
+
+
+	void LoadNextLevel(){
+		if(point >= pointsToNextLevel){
+			SceneManager.LoadScene(sceneBuildIndex:+1);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 	#region Public variables
 	public static GameManager Instance{
@@ -68,11 +96,5 @@ public class GameManager : MonoBehaviour {
 		}
 		return true;
 	}
-
-	public void UpdateScore(float points){
-		point += points;
-		scoreText.text = point.ToString("0000000");
-	}
-
 
 }

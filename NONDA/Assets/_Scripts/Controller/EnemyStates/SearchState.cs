@@ -28,6 +28,7 @@ public class SearchState : IEnemyState {
 		Search();
 		enemy.Move();
 		if(enemy.Target != null && !enemy.InAttackMode){ //&& get closes to attack
+			Debug.Log("Estou dentro SearchState.cs e encontrei um alvo para atacar");
 			enemy.ChangeState(new RangeState());
 		}
 	}

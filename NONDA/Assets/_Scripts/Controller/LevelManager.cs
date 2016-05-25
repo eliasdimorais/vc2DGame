@@ -28,8 +28,7 @@ public class LevelManager : MonoBehaviour
 		SceneManager.LoadScene (name);
 	}
 
-	public void QuitRequest(){
-		//Debug.Log ("Quit requested");
+	public void QuitRequest(){;
 		Application.Quit ();
 	}
 

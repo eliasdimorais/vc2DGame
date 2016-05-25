@@ -7,8 +7,13 @@ public class Enemy : Character {
 	private IEnemyState currentState;
 	[SerializeField]private float fightRange;
 	[SerializeField] private EdgeCollider2D beakCollider;
-	[SerializeField] private float movementSpeed;
-	[SerializeField] private uint damageValue;
+	[SerializeField] private float inicialSpeed;
+	[SerializeField] private uint damageValueOnPlayer;
+
+	public int touchCount;
+	public enum EnemyType{BIRD, LEECH, ANT}
+	public EnemyType enemyType;
+	public uint points;
 	#endregion
 	#region Public variable
 	public GameObject Target { get; set;}
@@ -42,7 +47,7 @@ public class Enemy : Character {
 	public void Move(){
 		if(!Attack){
 			MyAnimator.SetFloat("Speed", 1);
-			transform.Translate(GetDirection() * (movementSpeed * Time.deltaTime)); //move functions
+			transform.Translate(GetDirection() * (inicialSpeed * Time.deltaTime)); //move functions
 		}
 	}
 
@@ -72,41 +77,72 @@ public class Enemy : Character {
 		Target = null;
 		ChangeState(new SearchState());
 	}
-
+	void OnCollisionEnter2D(Collision2D coll){
+		if(coll.gameObject.tag == "Player"){
+			Debug.Log("Entrou no Dano, Colidiu com a Suzana.. aiaiai");
+			Player.Instance.DealDamage(damageValueOnPlayer);
+		}
+	}
 	void OnTriggerEnter2D(Collider2D other){
 		//base.OnTriggerEnter2D(other);
 		var tag = other.gameObject.tag; 
 		if (tag == "Edge"){
 			ChangeDirection();
-		}else if(tag == "Player"){
-			Debug.Log("Entrou no Dano, Colidiu com a Suzana.. aiaiai");
-			Player.Instance.DealDamage(damageValue);
 		}
+
 	}
 
 	#region implemented abstract members of Character
 
 	public override IEnumerator DealDamage (uint damage)
 	{
-		for (int i = 0; i < Input.touchCount; ++i) {
-            if (Input.GetTouch(i).phase == TouchPhase.Began)
-				totalLife -= damage;
-			if(!IsDead){
-				MyAnimator.SetTrigger("Damage");
-				Debug.Log("Dead");
-			}
-			else{
-				MyAnimator.SetTrigger("Dead");
-				Debug.Log("Dead");
-				yield return null;
-			}
-        }	
-	}
+		if(!IsDead){
+			MyAnimator.SetTrigger("Damage");
+			Debug.Log("Damage");
+		}
+		else{
+			MyAnimator.SetTrigger("Dead");
+			Debug.Log("Dead");
+			yield return null;
+		}
+     }	
 
 	public override bool IsDead {
 		get {
-			return totalLife <= 0;
+			return touchCount <= 0;
 		}
 	}
 	#endregion
+
+	// Touch Class
+	void OnMouseDown () {
+		touchCount--;
+		Debug.Log(touchCount);
+		gameObject.GetComponent<Animator>().SetTrigger("Damage");
+		if(touchCount <= 0){
+			GameManager.Instance.UpdateScore(points);
+
+			switch (enemyType){
+				case EnemyType.ANT:
+					break;
+				case EnemyType.BIRD:
+					gameObject.GetComponent<Animator>().SetBool("isDead", true);
+					gameObject.SetActive(false);
+					//DestroyEnemy();
+					break;
+				case EnemyType.LEECH:
+					break;
+				
+			}
+		}
+	}
+
+	void OnMouseUp(){
+		gameObject.GetComponent<Animator>().SetTrigger("Attack");
+	}
+
+	void DestroyEnemy(){
+		DestroyObject(this);
+	}
+
 }

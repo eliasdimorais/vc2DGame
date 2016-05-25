@@ -14,30 +14,21 @@ public class ItemController : MonoBehaviour {
 	}
 	public Wave[] waves;
 
-	public float timeBetweenWaves = 5f;
+	public float timeBetweenWaves = 2.5f;
 	public float waveCountdown;
 	public Transform[] itemSpawnPoint;
 
 	#endregion
 
 	#region Private Variables
-	//private float searchCountdown = 1f; //Time between search is in seconds 
-	private GameObject parent;
-	private Item itemFolder;
+	private float searchCountdown = 1f; //Time between search is in seconds 
 	private int nextWave = 0;
+	private bool isFirstWave; 
 	private SpawnState state = SpawnState.COUNTING;
-	private float searchCountdown = 1f; 
 	#endregion
 
 
 	void Start(){
-//		parent = GameObject.Find ("Items");
-//		Debug.Log(parent);
-//		itemFolder = GameObject.FindObjectsOfType<Item>();
-//	
-//		if (!parent) {
-//			parent = new GameObject("Items");
-//		}
 		if(waves.Length == 0){
 			Debug.LogError("No WAVES HAS BEEN FOUND. ");
 		}
@@ -45,7 +36,6 @@ public class ItemController : MonoBehaviour {
 		if(itemSpawnPoint.Length == 0){
 			Debug.LogError("No item Spawn referenced");
 		}
-
 		waveCountdown = timeBetweenWaves;
 	}
 
@@ -97,9 +87,11 @@ public class ItemController : MonoBehaviour {
 		yield break; // sempre usar quando tiver usando IEnumerator
 	}
 
-	public void SpawnItem(Transform _item){		
-		Transform _esp = itemSpawnPoint[ Random.Range (0, itemSpawnPoint.Length) ]; //choose random point declared on the Unity Editor
-		Instantiate(_item, _esp.position, _esp.rotation);
+	public void SpawnItem(Transform _item){
+		Debug.Log("Spawning enemy: "+ _item.name);		
+		Transform _spawnPoint = itemSpawnPoint[ Random.Range (0,itemSpawnPoint.Length) ]; //choose random point declared on the Unity Editor
+		Instantiate(_item, _spawnPoint.position, _spawnPoint.rotation);
+		Debug.Log(_item + "Position: " + _spawnPoint.position);
 	}
 
 	void WaveCompleted(){
@@ -114,7 +106,6 @@ public class ItemController : MonoBehaviour {
 			nextWave++;
 		}
 	}
-
 	#endregion
 
 }

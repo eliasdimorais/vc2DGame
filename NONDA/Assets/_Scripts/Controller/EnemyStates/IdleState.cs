@@ -8,14 +8,6 @@ public class IdleState : IEnemyState {
 	private float idleDuration = 3f; //in seconds
 	#endregion
 
-	void Start () {
-	
-	}
-
-	void Update () {
-	
-	}
-
 	private void Idle(){
 		enemy.MyAnimator.SetFloat("Speed", 0);
 		idleTimer += Time.deltaTime;

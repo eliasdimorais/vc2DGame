@@ -29,7 +29,7 @@ public class GameTimer : MonoBehaviour {
 			isLevelOver = true;
 		}
 		if(isLevelOver == true){
-				SceneManager.LoadScene("02_Quiz");
+			SceneManager.LoadScene("03Level_Clear");
 		}
 
 	}

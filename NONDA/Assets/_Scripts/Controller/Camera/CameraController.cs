@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour {
 	void Awake ()
 	{
 		// Pegando referencia do jogador.
+		//player = GameObject.Find("Nonda").transform;
 		player = GameObject.Find("Player").transform;
 
 		cameraStartCoord = new Vector2 (transform.position.x, transform.position.y);

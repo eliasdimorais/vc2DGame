@@ -14,7 +14,7 @@ public class SpawnerController : MonoBehaviour {
 	}
 	public Wave[] waves;
 	private GameObject parent;
-	private Enemy enemies;
+	//private Enemy enemies;
 
 	public float timeBetweenWaves = 5f;
 	public float waveCountdown;
@@ -29,13 +29,13 @@ public class SpawnerController : MonoBehaviour {
 
 
 	void Start(){
-		parent = GameObject.Find ("Enemies");
-		Debug.Log(parent);
-		enemies = GameObject.FindObjectOfType<Enemy>();
-	
-		if (!parent) {
-			parent = new GameObject("Enemies");
-		}
+//		parent = GameObject.Find ("Enemies");
+//		Debug.Log(parent);
+//		enemies = GameObject.FindObjectOfType<Enemy>();
+//	
+//		if (!parent) {
+//			parent = new GameObject("Enemies");
+//		}
 
 		if(waves.Length == 0){
 			Debug.LogError("No WAVES HAS BEEN FOUND. ");
@@ -94,7 +94,7 @@ public class SpawnerController : MonoBehaviour {
 	}
 
 	IEnumerator SpawnWave(Wave _wave){
-		Debug.Log("Spawing Wave "+ _wave.name);
+		//Debug.Log("Spawing Wave "+ _wave.name);
 		state = SpawnState.SPAWNING;
 		for (int i = 0; i < _wave.count; i++)
 		{

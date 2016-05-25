@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public delegate void DeadEventHandler();
 
@@ -10,11 +11,18 @@ public class Player : Character {
 	public float groundRadius;
 	public LayerMask whatIsGround;
 	public event DeadEventHandler Dead;
+	[SerializeField] protected Text lifeText;
 	#endregion
 
 	#region Private Variables
+	[SerializeField] protected float totalLife;
+	[SerializeField] private float minX;
+	[SerializeField] private float maxX;
+	[SerializeField] private float minY;
+	[SerializeField] private float maxY;
 //	private Vector2 startPosition;
 	private bool isGrounded;
+	[Range (0f, 18f)][SerializeField] private float jumpForce;
 	private bool doubleJumped = false;
 	private Vector2 fp; // first finger position
 	private Vector2 lp; // last finger position
@@ -24,7 +32,6 @@ public class Player : Character {
 	private bool immortal = false;
 	[Range (0f, 3f)][SerializeField]private float immortalTime;
 	[SerializeField]private SpriteRenderer spriteRenderer;
-
 	#endregion
 
 	#region Instances 
@@ -38,6 +45,22 @@ public class Player : Character {
 			return instance;
 		}
 	}
+	public float Life{
+		get{
+			return totalLife;
+		}
+		set 
+		{
+			lifeText.text = value.ToString();
+			this.totalLife = value;
+		}
+	}
+
+	public float JumpForce{
+		get {return jumpForce;}
+		set {jumpForce = value;}
+	}
+
 	#endregion
 
 	public override void Start () {
@@ -83,6 +106,20 @@ public class Player : Character {
 					}
 				}
 			}
+
+			if (Instance.transform.position.x <=minX || Instance.transform.position.x >=maxX){
+				float xPos = Mathf.Clamp(Instance.transform.position.x, minX + 0.1f, maxX);
+				Instance.transform.position = new Vector3(xPos, Instance.transform.position.y,0);
+				Debug.Log("Entrou max ou min em X");
+				ChangeDirection();
+			}
+
+			if (Instance.transform.position.y <=minY || Instance.transform.position.y >=maxY){
+				float yPos = Mathf.Clamp(Instance.transform.position.y, minY + 0.1f, maxY);
+				Instance.transform.position = new Vector3(yPos, Instance.transform.position.x,0);
+
+			}
+
 			if(Input.GetButtonDown("Horizontal")){
 					ChangeDirection();
 			}
@@ -140,7 +177,7 @@ public class Player : Character {
 	void OnDrawGizmos() {
         Gizmos.color = Color.yellow;
 		Gizmos.DrawSphere(groundCheck.position, groundRadius);
-         }
+    }
 
 	#region implemented abstract members of Character
 	public override IEnumerator DealDamage (uint damage)
