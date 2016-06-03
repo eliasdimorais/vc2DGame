@@ -30,6 +30,7 @@ public class CameraController : MonoBehaviour {
 		//player = GameObject.Find("Nonda").transform;
 		player = GameObject.Find("Player").transform;
 
+
 		cameraStartCoord = new Vector2 (transform.position.x, transform.position.y);
 		cameraAreaXAxis = new Vector2 ( (cameraStartCoord.x + xAxisArea.x), (cameraStartCoord.x + xAxisArea.y) );
 		cameraAreaYAxis = new Vector2 ( (cameraStartCoord.y + yAxisArea.x), (cameraStartCoord.y + yAxisArea.y) );

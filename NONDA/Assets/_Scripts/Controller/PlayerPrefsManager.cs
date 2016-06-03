@@ -8,6 +8,11 @@ public class PlayerPrefsManager : MonoBehaviour {
 	const string MASTER_VOLUME_KEY = "master_volume";
 	const string DIFFICULTY_KEY = "difficulty";
 	const string LEVEL_KEY = "level_unlocked_";
+	const string ITEM_KEY = "item_unlocked_";
+	const string SCORE_KEY = "score";
+	const string HEALTH_KEY = "health";
+	const string STARS_KEY = "stars";
+
 	#endregion
 
 	//Settings for Change Game Music Volume
@@ -55,5 +60,22 @@ public class PlayerPrefsManager : MonoBehaviour {
 	public static float GetGameDifficulty(){
 		return PlayerPrefs.GetFloat(DIFFICULTY_KEY);
 	}
+
+
+	#region Player Level 
+	public static void SetScoreToLevelClear(uint score){
+		if (score > 0){
+			
+			PlayerPrefs.SetInt(SCORE_KEY, (int)score);
+		}else{
+			Debug.LogError("POINTS OUT OF RANGE");
+		}
+	}
+
+	public static float GetPointsToLevelClear(){
+		return PlayerPrefs.GetInt(SCORE_KEY);
+	}
+
+	#endregion
 
 }

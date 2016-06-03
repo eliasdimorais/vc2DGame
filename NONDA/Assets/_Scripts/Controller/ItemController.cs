@@ -44,8 +44,7 @@ public class ItemController : MonoBehaviour {
 			if(!ItemHasEnergy()){
 				WaveCompleted();
 				Debug.Log ("Wave completed");
-
-				//Update Points 
+				//Update Points on Game Manager
 			}else{
 				return;
 			}
@@ -88,14 +87,12 @@ public class ItemController : MonoBehaviour {
 	}
 
 	public void SpawnItem(Transform _item){
-		Debug.Log("Spawning enemy: "+ _item.name);		
 		Transform _spawnPoint = itemSpawnPoint[ Random.Range (0,itemSpawnPoint.Length) ]; //choose random point declared on the Unity Editor
 		Instantiate(_item, _spawnPoint.position, _spawnPoint.rotation);
-		Debug.Log(_item + "Position: " + _spawnPoint.position);
+		//Debug.Log(_item + "Position: " + _spawnPoint.position);
 	}
 
 	void WaveCompleted(){
-		Debug.Log("Wave Completed");
 		state = SpawnState.COUNTING;
 		waveCountdown = timeBetweenWaves;
 		if(nextWave+1 > waves.Length -1){

@@ -16,7 +16,7 @@ public class EnemySight : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.tag == "Player"){
 			enemy.Target = other.gameObject;
-			Debug.Log("I found you worm little thing");
+			//Debug.Log("I found you worm little thing");
 		}
 
 	}
@@ -24,7 +24,7 @@ public class EnemySight : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D other){
 		if(other.tag == "Player"){
 			enemy.Target = null;
-			Debug.Log("I'm letting you go");
+			//Debug.Log("I'm letting you go");
 		}
 	}
 }

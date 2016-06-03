@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameTimer : MonoBehaviour {
 
 	#region Public Variables
+	//timebar
 	public Image timerBar;
 	public float currentTimerBar = 0f;
 	public float maxTimerBar;
@@ -21,6 +22,7 @@ public class GameTimer : MonoBehaviour {
 		InvokeRepeating("increaseTime", 2, 2);
 	}
 
+	#region Timebar
 	void increaseTime(){
 		currentTimerBar -= 5f;
 		float cal_Timer = currentTimerBar / maxTimerBar;
@@ -31,10 +33,10 @@ public class GameTimer : MonoBehaviour {
 		if(isLevelOver == true){
 			SceneManager.LoadScene("03Level_Clear");
 		}
-
 	}
 
 	void SetTimeBar (float myTimer) {
 		timerBar.fillAmount = myTimer;
 	}
+	#endregion
 }

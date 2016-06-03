@@ -17,6 +17,10 @@ public class TestScript : MonoBehaviour {
 		PlayerPrefsManager.SetGameDifficulty(0.04f);
 		print(PlayerPrefsManager.GetGameDifficulty());
 
+		print(PlayerPrefsManager.GetPointsToLevelClear());
+		PlayerPrefsManager.SetScoreToLevelClear(500);
+		print(PlayerPrefsManager.GetPointsToLevelClear());
+
 
 	}
 	

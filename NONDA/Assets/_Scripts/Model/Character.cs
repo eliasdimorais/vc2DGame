@@ -42,7 +42,7 @@ public abstract class Character : MonoBehaviour {
 		MyRigidBody = GetComponent<Rigidbody2D>();
 	}
 
-	public abstract IEnumerator DealDamage(uint damage);
+	//public abstract IEnumerator DealDamage(int damage);
 
 	//Make Character change to oposite direction
 	public void ChangeDirection(){

@@ -55,7 +55,6 @@ public class TouchController : MonoBehaviour {
 	}
 
  	void SpawnPoints(float points, float x, float y){
- 		
 		x = Mathf.Clamp(x, 0.05f, 0.95f); //clamp positions to screen to ensure
 		y = Mathf.Clamp(y, 0.05f, 0.9f); //show string
  		Transform gui = Instantiate(pointsPrefab,new Vector3(x, y, 0),Quaternion.identity) as Transform;
@@ -67,23 +66,5 @@ public class TouchController : MonoBehaviour {
  		DestroyObject(gui.gameObject);
  	} 
 
-//	void CreateObject(bool isCorrect){
-//		GameObject circle = new GameObject();
-//		SpriteRenderer renderer = circle.AddComponent<SpriteRenderer>();
-//		if(isCorrect){
-//			renderer.sprite = Resources.Load("Sprites/items/green.png", typeof(Sprite)) as Sprite;
-//			Debug.Log(renderer.sprite.name);
-//
-//		}else{
-//			renderer.sprite = Resources.Load("Sprites/items/red.png", typeof(Sprite)) as Sprite;
-//			Debug.Log(renderer.sprite.name);
-//		}
-//	}
-
-//	public void CreateObject(string prefabName) {
-//   		GameObject newObject = GameObject.Instantiate(Resources.Load(prefabName)) as GameObject;
-//   		Debug.Log("devolveu esse objeto >> " + newObject);
-//   		DestroyObject(newObject);
-//	}
  }		
 

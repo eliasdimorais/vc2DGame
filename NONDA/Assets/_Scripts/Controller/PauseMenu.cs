@@ -8,18 +8,18 @@ public class PauseMenu : MonoBehaviour {
 	//public string levelSelect;
 	//public string mainMenu;
 	public bool isPaused;
-	public GameObject pauseMenuCanvas;
+	public GameObject pauseMenu;
 	#endregion
 
 	public void Pause(){
 		if(Time.timeScale == 1){
 			isPaused = true;
 			Time.timeScale = 0;
-			pauseMenuCanvas.SetActive(true);
+			pauseMenu.SetActive(true);
 		}else if(Time.timeScale == 0){
 			isPaused = !isPaused;
 			Time.timeScale = 1;
-			pauseMenuCanvas.SetActive(false);
+			pauseMenu.SetActive(false);
 		}
 	}
 

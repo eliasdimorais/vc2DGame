@@ -24,11 +24,10 @@ public class SearchState : IEnemyState {
 	#region IEnemyState implementation
 	public void Execute ()
 	{
-		//Debug.Log("Searching State");
 		Search();
 		enemy.Move();
 		if(enemy.Target != null && !enemy.InAttackMode){ //&& get closes to attack
-			Debug.Log("Estou dentro SearchState.cs e encontrei um alvo para atacar");
+			//Debug.Log("Estou dentro SearchState.cs e encontrei um alvo para atacar");
 			enemy.ChangeState(new RangeState());
 		}
 	}

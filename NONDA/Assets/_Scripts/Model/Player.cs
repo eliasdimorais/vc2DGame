@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public delegate void DeadEventHandler();
 
@@ -10,17 +11,18 @@ public class Player : Character {
 	public Transform groundCheck;
 	public float groundRadius;
 	public LayerMask whatIsGround;
-	public event DeadEventHandler Dead;
-	[SerializeField] protected Text lifeText;
+	//public event DeadEventHandler Dead;
+	[SerializeField] public uint totalHealth;
+	public uint currentHealth;
 	#endregion
 
 	#region Private Variables
-	[SerializeField] protected float totalLife;
+	private AudioSource audioSource;
 	[SerializeField] private float minX;
 	[SerializeField] private float maxX;
 	[SerializeField] private float minY;
 	[SerializeField] private float maxY;
-//	private Vector2 startPosition;
+	//private Vector2 startPosition;
 	private bool isGrounded;
 	[Range (0f, 18f)][SerializeField] private float jumpForce;
 	private bool doubleJumped = false;
@@ -29,30 +31,31 @@ public class Player : Character {
 	//private float lpX; //Last position in X
 	private int offset = 70; //value where accept touch to calculate swipe
 	private float moveSpeedTemp;
-	private bool immortal = false;
+	private bool immortal = true;
 	[Range (0f, 3f)][SerializeField]private float immortalTime;
-	[SerializeField]private SpriteRenderer spriteRenderer;
+	//[SerializeField]private SpriteRenderer spriteRenderer;
 	#endregion
 
 	#region Instances 
 	private static Player instance;
+
 	public static Player Instance{
 		get {
 			if(instance == null){
 				instance = GameObject.FindObjectOfType<Player>();
-				//Debug.Log("Pass here");
 			}
 			return instance;
 		}
 	}
-	public float Life{
+
+	public uint Health{
 		get{
-			return totalLife;
+			return totalHealth;
 		}
 		set 
 		{
-			lifeText.text = value.ToString();
-			this.totalLife = value;
+			//healthText.text = value.ToString("000");
+			this.totalHealth = value;
 		}
 	}
 
@@ -60,20 +63,22 @@ public class Player : Character {
 		get {return jumpForce;}
 		set {jumpForce = value;}
 	}
-
 	#endregion
 
 	public override void Start () {
 		base.Start();
 		//startPosition = transform.position;
-		spriteRenderer = GetComponent<SpriteRenderer>();
+		//spriteRenderer = GetComponent<SpriteRenderer>();
 		isGrounded = true;
 	    MyRigidBody.freezeRotation = true;
-
+	    currentHealth = totalHealth;
 	}
 
 	void Update(){
 		#if UNITY_ANDROID
+			if (currentHealth > totalHealth){
+				currentHealth = totalHealth;
+			}
 			if(!IsDead){
 			moveSpeedTemp = 0f;
 			foreach(Touch touch in Input.touches){
@@ -107,16 +112,16 @@ public class Player : Character {
 				}
 			}
 
-			if (Instance.transform.position.x <=minX || Instance.transform.position.x >=maxX){
+			if (Instance.transform.position.x <= minX || Instance.transform.position.x >= maxX){
 				float xPos = Mathf.Clamp(Instance.transform.position.x, minX + 0.1f, maxX);
-				Instance.transform.position = new Vector3(xPos, Instance.transform.position.y,0);
+				Instance.transform.position = new Vector3(xPos, Instance.transform.position.y,1);
 				Debug.Log("Entrou max ou min em X");
 				ChangeDirection();
 			}
 
 			if (Instance.transform.position.y <=minY || Instance.transform.position.y >=maxY){
 				float yPos = Mathf.Clamp(Instance.transform.position.y, minY + 0.1f, maxY);
-				Instance.transform.position = new Vector3(yPos, Instance.transform.position.x,0);
+				Instance.transform.position = new Vector3(yPos, Instance.transform.position.x,1);
 
 			}
 
@@ -132,7 +137,7 @@ public class Player : Character {
 		}  
 		#endif
 	}
-	//Metodo para controlar jogador usando teclas (botao no UI) 
+
 	void FixedUpdate(){
 		//Metodo que player move automaticamente
 		#if UNITY_ANDROID
@@ -146,8 +151,7 @@ public class Player : Character {
 		        doubleJumped = false;
 
 			MyRigidBody.velocity = new Vector2(Instance.MoveSpeed, MyRigidBody.velocity.y);
-
-			MyAnimator.SetFloat("Speed", MyRigidBody.velocity.x);
+			//MyRigidBody.gravityScale(4);
 		}
 		#endif
 	}
@@ -165,7 +169,6 @@ public class Player : Character {
 	    doubleJumped = true;
 	}
 
-	//collide wit the Wall
 	void OnTriggerEnter2D (Collider2D other){
 		var tag = other.gameObject.tag; 
 		if (tag == "Wall"){
@@ -173,53 +176,55 @@ public class Player : Character {
 		}
 	} 
 
-	//check groundcheck
 	void OnDrawGizmos() {
         Gizmos.color = Color.yellow;
 		Gizmos.DrawSphere(groundCheck.position, groundRadius);
     }
 
 	#region implemented abstract members of Character
-	public override IEnumerator DealDamage (uint damage)
-	{
-		Debug.Log("Suzaninha");
-
-		if(!immortal){
-			totalLife -= damage;
-			if(!IsDead){
-				immortal = true;
-				yield return new WaitForSeconds(immortalTime);
-				immortal = false;
-				MyAnimator.SetTrigger("Hit");
-			}
+	public void DealDamage (int damage)
+	{	
+		if(!IsDead){
+			IndicateImmortal();
+			MyAnimator.SetTrigger("Hit");
+			GameManager.Instance.ChangeHeartSpriteUI(totalHealth);
+			totalHealth -= (uint)damage;
+			//AudioSource.PlayClipAtPoint(playerDeathSound, transform.position);
 		}else{
-			MyAnimator.SetLayerWeight(1,0);
-			MyAnimator.SetTrigger("Dead");
-		} 
+			Dead();
+		}
 	}
 	#endregion
 	private IEnumerator IndicateImmortal(){
-		while (!immortal){
-			spriteRenderer.enabled = false;
-			yield return new WaitForSeconds(.1f);
-			spriteRenderer.enabled = true;
-			yield return new WaitForSeconds (.1f);
-		}
+		immortal = !immortal;
+		yield return new WaitForSeconds(immortalTime);
+
+//		while (!immortal){
+//			spriteRenderer.enabled = false;
+//			yield return new WaitForSeconds(.1f);
+//			spriteRenderer.enabled = true;
+//			yield return new WaitForSeconds (.1f);
+//		}
 	}
 
 	public override bool IsDead {
 		get {
-			if(totalLife <= 0){
-				OnDead();
+			if(totalHealth <= 0){
+				Dead();
 			}
 
-			return totalLife <= 0;
+			return totalHealth <= 0;
 		}
 	}
 
-	public void OnDead(){
+	public void Dead(){
+		MyAnimator.SetTrigger("Dead");
+	}
+
+	/*public void OnDead(){
 		if(Dead != null){
+			instance.MyAnimator.SetTrigger("Dead");
 			Dead();
 		}
-	}
+	}*/
 }

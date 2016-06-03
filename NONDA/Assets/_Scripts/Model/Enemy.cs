@@ -8,12 +8,12 @@ public class Enemy : Character {
 	[SerializeField]private float fightRange;
 	[SerializeField] private EdgeCollider2D beakCollider;
 	[SerializeField] private float inicialSpeed;
-	[SerializeField] private uint damageValueOnPlayer;
+	[SerializeField] private int damageValueOnPlayer;
 
 	public int touchCount;
 	public enum EnemyType{BIRD, LEECH, ANT}
 	public EnemyType enemyType;
-	public uint points;
+	public int score;
 	#endregion
 	#region Public variable
 	public GameObject Target { get; set;}
@@ -31,22 +31,21 @@ public class Enemy : Character {
 
 	public override void Start () {
 		base.Start();
-		Player.Instance.Dead += new DeadEventHandler(RemoveTarget);
+		//Player.Instance.Dead += new DeadEventHandler(RemoveTarget);
 		ChangeState(new IdleState());
 	}
 
 	void Update () {
-		if(!IsDead /*&& !GameTimer.IsTimerOut()*/){
-			//if(!TakingDamage){
-				currentState.Execute();
-			//}
+		if(!IsDead){
+			currentState.Execute();
 			FollowTarget();
 		}
+		MoveSpeed = inicialSpeed; //change because every frame called this moveSpeed in order to make the enmy stop Speed while idling
 	}
 
 	public void Move(){
 		if(!Attack){
-			MyAnimator.SetFloat("Speed", 1);
+			MyAnimator.SetFloat("Speed", MoveSpeed);
 			transform.Translate(GetDirection() * (inicialSpeed * Time.deltaTime)); //move functions
 		}
 	}
@@ -77,35 +76,30 @@ public class Enemy : Character {
 		Target = null;
 		ChangeState(new SearchState());
 	}
-	void OnCollisionEnter2D(Collision2D coll){
-		if(coll.gameObject.tag == "Player"){
-			Debug.Log("Entrou no Dano, Colidiu com a Suzana.. aiaiai");
-			Player.Instance.DealDamage(damageValueOnPlayer);
-		}
-	}
+
 	void OnTriggerEnter2D(Collider2D other){
-		//base.OnTriggerEnter2D(other);
-		var tag = other.gameObject.tag; 
+		var tag = other.gameObject.tag;
 		if (tag == "Edge"){
 			ChangeDirection();
 		}
-
 	}
+	//Handle PLayers DAmage
+	void OnTriggerExit2D(Collider2D other){
+		var tag = other.gameObject.tag;
+		if(tag == "Player"){
+			Player.Instance.DealDamage(damageValueOnPlayer);
+		}
+		
+  	}  
 
 	#region implemented abstract members of Character
 
-	public override IEnumerator DealDamage (uint damage)
-	{
-		if(!IsDead){
-			MyAnimator.SetTrigger("Damage");
-			Debug.Log("Damage");
-		}
-		else{
-			MyAnimator.SetTrigger("Dead");
-			Debug.Log("Dead");
-			yield return null;
-		}
-     }	
+//	public override IEnumerator DealDamage (int damage)
+//	{
+//		
+//			yield return null;
+//		
+//     }	
 
 	public override bool IsDead {
 		get {
@@ -117,28 +111,25 @@ public class Enemy : Character {
 	// Touch Class
 	void OnMouseDown () {
 		touchCount--;
-		Debug.Log(touchCount);
 		gameObject.GetComponent<Animator>().SetTrigger("Damage");
 		if(touchCount <= 0){
-			GameManager.Instance.UpdateScore(points);
-
+			GameManager.Instance.UpdateScore(score);
 			switch (enemyType){
 				case EnemyType.ANT:
 					break;
 				case EnemyType.BIRD:
-					gameObject.GetComponent<Animator>().SetBool("isDead", true);
+					gameObject.GetComponent<Animator>().SetBool("isDead", true); //I call Destroy Enemy Inside animation trough Event
 					gameObject.SetActive(false);
-					//DestroyEnemy();
 					break;
 				case EnemyType.LEECH:
 					break;
-				
+			
 			}
 		}
 	}
 
 	void OnMouseUp(){
-		gameObject.GetComponent<Animator>().SetTrigger("Attack");
+		gameObject.GetComponent<Animator>().ResetTrigger("Damage"); //I can call trough event as well
 	}
 
 	void DestroyEnemy(){
