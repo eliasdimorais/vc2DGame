@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 
 	#region Instances
 	private static GameManager instance;
+	private AudioManager audioManager;
 	private Player player; 
 	#endregion
 
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] private Text scoreText;
 	[SerializeField] private uint scoreToNextLevel;
 	private int score = 0;
-	private bool isLevelOver = false;
+	private bool isTimeUp = false;
 	#endregion
 
 	#region Pause Menu
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour {
 	[SerializeField]private uint healthRemaining = 5;
 	public Sprite[] HeartSprites;
 	public Image HeartImageUI;
+	public string healthSoundName;
 	#endregion
 
 	#region Stars Game
@@ -52,7 +54,9 @@ public class GameManager : MonoBehaviour {
 	public GameObject levelClearCanvas;
 	[SerializeField]private Text scoreTextCanvas;
 	[SerializeField]private Text healthTextCanvas;
-	[SerializeField] private Text conditionLabel;
+	[SerializeField]private Text conditionLabel;
+	[SerializeField]private GameObject wormSad;
+	[SerializeField]private GameObject wormHappy;
 	#endregion
 
 	public static GameManager Instance{
@@ -65,15 +69,23 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start(){
+		isPaused = !isPaused;
 		player = GameObject.Find("Player").GetComponent<Player>();
 		currentTimerBar = maxTimerBar;
 		InvokeRepeating("increaseTime", 2, 2);
 		levelClearCanvas.SetActive(false);
+		audioManager = AudioManager.Instance;
+		if(audioManager == null){
+			Debug.LogError("IM KREAZI NO AUDIOMANAGER ON THE MF SCENE");
+		} 
+		//wormHappy = gameObject.GetComponent<SpriteRenderer>().sprite;
+		wormSad.SetActive(false);
+		wormHappy.SetActive(false);
 	}
 
 	void Update(){
 		ChangeHeartSpriteUI(player.Health);
-		LoadLevelClear();
+		ShowLevelClear();
 	}
 
 	void Awake(){
@@ -104,6 +116,12 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public void PauseLevelClear(){
+		if(Time.timeScale == 1){
+			Time.timeScale = 0;
+		}
+	}
+
 	public void Resume(){
 		isPaused = false;
 	}
@@ -118,17 +136,17 @@ public class GameManager : MonoBehaviour {
 	#endregion
 
 	#region Timebar
-	//handles with the Level Clear Screen
+	//Handle With Level Clear if TIme is up
 	void increaseTime(){
 		currentTimerBar -= 5f;
 		float cal_Timer = currentTimerBar / maxTimerBar;
 		SetTimeBar(cal_Timer);
 		if(currentTimerBar == 0){
-			isLevelOver = true;
+			isTimeUp = true;
 		}
-		if(isLevelOver == true){
+		if(isTimeUp == true){
 			levelClearCanvas.SetActive(true);
-			//Pause();
+			LoadLevelClear();
 		}
 	}
 
@@ -143,6 +161,7 @@ public class GameManager : MonoBehaviour {
 
 	public void ChangeHeartSpriteUI(uint newHealth){
 		int updatedHealth = (int) newHealth;
+		audioManager.PlaySound(healthSoundName);
 		for (int i = (int)healthRemaining; i <= updatedHealth; i--) {
 			if(updatedHealth == i){ 
 				HeartImageUI.sprite = HeartSprites[i];
@@ -157,29 +176,53 @@ public class GameManager : MonoBehaviour {
 	}
 
 	#region Handling with Victory / Lose
-	public void LoadLevelClear(){
+	public void ShowLevelClear(){
 		scoreTextCanvas.text = score.ToString("00000");
 		healthTextCanvas.text = player.Health.ToString("0");
-		MessageToPlayer();
 
-	}
-
-	void MessageToPlayer(){
 		if(healthRemaining > 0 && score >= scoreToNextLevel){
 			conditionLabel.text = "MUITO BEM!";
+			wormSad.SetActive(true);
 		}else{
-			conditionLabel.text = "AHHHH NÃO!";
+			conditionLabel.text = "AHHH NÃO!";
+			wormHappy.SetActive(true);
 		}
 	}
-//
-//	void EnableWinLabel(){
-//		winLabel.enabled = !winLabel.enabled;
-//	}
-//
-//	void EnableLoseLabel(){
-//		winLabel.enabled = !winLabel.enabled;
-//	}
 
+	public void LoadLevelClear(){
+		if(IsScoreEnough() && IsHealthEnough() ){
+			ShowLevelClear();
+			PauseLevelClear();
+			Debug.Log("Passei Antes e tenho vida");
+		}else if(IsTimeUp() && !IsHealthEnough()){
+			//perdeu por vida E/OU tempo
+			Debug.Log("Tempo Esgotado ou PLayer Sem Vida");
+			PauseLevelClear();
+			ShowLevelClear();
+		}else{
+			PauseLevelClear();
+			ShowLevelClear();
+
+			return;
+		}
+
+	}
+
+	public bool IsLevelOver(){
+		return isTimeUp ? true : false;
+	}
+
+	public bool IsScoreEnough(){
+		return score >= scoreToNextLevel;
+	}
+
+	public bool IsHealthEnough(){
+		return healthRemaining > 0;
+	}
+
+	public bool IsTimeUp(){
+		return currentTimerBar <= 0;
+	}
 	#endregion
 
 }

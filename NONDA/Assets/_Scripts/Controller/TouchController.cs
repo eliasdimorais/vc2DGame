@@ -37,7 +37,7 @@ public class TouchController : MonoBehaviour {
 					//Animacao de Dano e adicionar + numero 
 					break;
 				case ItemType.BREAD:
-					//SpawnPoints(points, transform.position.x, transform.position.y);
+					SpawnPoints(points, transform.position.x, transform.position.y);
 					break;
 				case ItemType.APPLE:
 					break;
