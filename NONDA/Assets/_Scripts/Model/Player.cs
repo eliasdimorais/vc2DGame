@@ -14,6 +14,9 @@ public class Player : Character {
 	//public event DeadEventHandler Dead;
 	[SerializeField] public uint totalHealth;
 	public uint currentHealth;
+	public string deadSoundName;
+	public string hitSoundName;
+	public string jumpSoundName;
 	#endregion
 
 	#region Private Variables
@@ -32,7 +35,9 @@ public class Player : Character {
 	private int offset = 70; //value where accept touch to calculate swipe
 	private float moveSpeedTemp;
 	private bool immortal = true;
-	[Range (0f, 3f)][SerializeField]private float immortalTime;
+	[Range (0f, 30f)][SerializeField]public float immortalTime;
+	[SerializeField] private BoxCollider2D boxCollider;
+
 	//[SerializeField]private SpriteRenderer spriteRenderer;
 	#endregion
 
@@ -54,7 +59,6 @@ public class Player : Character {
 		}
 		set 
 		{
-			//healthText.text = value.ToString("000");
 			this.totalHealth = value;
 		}
 	}
@@ -115,14 +119,13 @@ public class Player : Character {
 			if (Instance.transform.position.x <= minX || Instance.transform.position.x >= maxX){
 				float xPos = Mathf.Clamp(Instance.transform.position.x, minX + 0.1f, maxX);
 				Instance.transform.position = new Vector3(xPos, Instance.transform.position.y,1);
-				Debug.Log("Entrou max ou min em X");
 				ChangeDirection();
 			}
 
 			if (Instance.transform.position.y <=minY || Instance.transform.position.y >=maxY){
 				float yPos = Mathf.Clamp(Instance.transform.position.y, minY + 0.1f, maxY);
 				Instance.transform.position = new Vector3(yPos, Instance.transform.position.x,1);
-
+				// put maxY or  on the jump
 			}
 
 			if(Input.GetButtonDown("Horizontal")){
@@ -159,13 +162,12 @@ public class Player : Character {
 	public void Jump(){
 		MyAnimator.SetTrigger("SetJump");
 	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, instance.JumpForce);
-
-		//MyAnimator.SetBool("Grounded", false);
-		//rigidB2D.AddForce(new Vector2(0, player.JumpHeight));
+		//AudioManager.Instance.PlaySound(jumpSoundName);
 	}
 
 	public void DoubleJump(){
 	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, instance.JumpForce);
+		//AudioManager.Instance.PlaySound(jumpSoundName);
 	    doubleJumped = true;
 	}
 
@@ -184,20 +186,23 @@ public class Player : Character {
 	#region implemented abstract members of Character
 	public void DealDamage (int damage)
 	{	
-		if(!IsDead){
-			IndicateImmortal();
+		//IndicateImmortal();
+		if(!IsDead && immortal){
 			MyAnimator.SetTrigger("Hit");
 			GameManager.Instance.ChangeHeartSpriteUI(totalHealth);
 			totalHealth -= (uint)damage;
-			//AudioSource.PlayClipAtPoint(playerDeathSound, transform.position);
+			//AudioManager.Instance.PlaySound(hitSoundName);
 		}else{
+			//AudioManager.Instance.PlaySound(deadSoundName);
 			Dead();
 		}
 	}
 	#endregion
 	private IEnumerator IndicateImmortal(){
-		immortal = !immortal;
 		yield return new WaitForSeconds(immortalTime);
+		//yield return new WaitForEndOfFrame();
+		immortal = !immortal;
+		Debug.Log("Passei por aqui");
 
 //		while (!immortal){
 //			spriteRenderer.enabled = false;
@@ -219,6 +224,7 @@ public class Player : Character {
 
 	public void Dead(){
 		MyAnimator.SetTrigger("Dead");
+		GameManager.Instance.LoadLevelClear();
 	}
 
 	/*public void OnDead(){

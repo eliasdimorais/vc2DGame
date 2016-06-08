@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
@@ -34,4 +34,4 @@ public class PauseMenu : MonoBehaviour {
 	public void Quit(){
 		SceneManager.LoadScene(sceneName:"01a_Start");
 	}
-}
+} */

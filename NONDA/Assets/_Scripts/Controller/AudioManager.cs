@@ -9,6 +9,7 @@ public class Sound{
 
 	[Range(0f, 0.5f)] public float randomVolume = 0.1f;
 	[Range(0f, 0.5f)] public float randomPitch = 0.1f;
+	public bool loop = false;
 	private AudioSource source;
 
 	public void SetSource(AudioSource _source){
@@ -21,6 +22,11 @@ public class Sound{
 		source.pitch = pitch  * (1 + Random.Range(-randomPitch / 2f, randomPitch / 2f));;
 		source.Play();
 	}
+
+	public void Stop()
+	{
+		source.Stop();
+	}
 }
 
 public class AudioManager : MonoBehaviour{
@@ -30,8 +36,12 @@ public class AudioManager : MonoBehaviour{
 	void Awake(){
 		if(Instance != null){
 			Debug.LogError("More than 1 AudioManager in the Scene");
+			if(Instance != this){
+				Destroy(this.gameObject);
+			}
 		}else{
-			Instance = this;	
+			Instance = this;
+			DontDestroyOnLoad(this);
 		}
 	}
 
@@ -41,7 +51,6 @@ public class AudioManager : MonoBehaviour{
 			sounds[i].SetSource(_go.AddComponent<AudioSource>()); //faster
 			_go.transform.SetParent(this.transform);
 		}
-		PlaySound("Jump");
 	}
 
 	public void PlaySound(string _name){
@@ -54,4 +63,17 @@ public class AudioManager : MonoBehaviour{
 		//no sound found with that _name
 		Debug.LogWarning("AudioManager: Sound not found in list: " + _name);
 	}
+
+	public void StopSound(string _name)
+	{
+		for (int i = 0; i < sounds.Length; i++){
+			if (sounds[i].name == _name){
+				sounds[i].Stop();
+				return;
+			}
+		}
+		// no sound with _name
+		Debug.LogWarning("AudioManager: Sound not found in list, " + _name);
+	}
 }
+

@@ -6,14 +6,6 @@ public class SearchState : IEnemyState {
 	private float searchTimer;
 	private float searchDuration = 10f;
 	 
-	void Start () {
-	
-	}
-
-	void Update () {
-	
-	}
-
 	private void Search(){
 		searchTimer += Time.deltaTime;
 		if(searchTimer >= searchDuration){

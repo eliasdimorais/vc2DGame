@@ -49,8 +49,9 @@ public class AttackController : IEnemyState {
 	}
 
 	public void OnTriggerEnter (Collider2D other)
-	{
-		
+	{	
+		//var tag = other.gameObject.tag;
+
 	}
 	#endregion]
 

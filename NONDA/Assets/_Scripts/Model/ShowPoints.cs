@@ -20,7 +20,6 @@ public class ShowPoints : MonoBehaviour {
 			temp += scroll*Time.deltaTime;
 			alpha -= Time.deltaTime/duration;
 			alpha = pointsText.material.color.a;
-			Debug.Log("Quase saindo daqui");
 		}else{
 			DestroyObject(pointsText);
 		}

@@ -7,14 +7,6 @@ public class RangeState : IEnemyState {
 //	private float attackCoolDown = 3;
 //	private bool canAttack = true;
 
-	void Start () {
-	
-	}
-	
-	void Update () {
-	
-	}
-
 	#region IEnemyState implementation
 
 	public void Execute ()

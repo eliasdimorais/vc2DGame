@@ -10,6 +10,7 @@ public abstract class Character : MonoBehaviour {
 	#endregion
 
 	#region Public
+	[SerializeField] private Collider2D typeCollider;
 	public Animator MyAnimator {
 		get;
 		private set;
@@ -17,7 +18,7 @@ public abstract class Character : MonoBehaviour {
 	public abstract bool IsDead {get;}
 	#endregion
 	#region Private Variables
-	[Range (-3f, 3f)][SerializeField] private float moveSpeed;
+	[Range (-5f, 5f)][SerializeField] private float moveSpeed;
 	//[SerializeField] private Transform acidBombPosition;
 	//[SerializeField] private GameObject acidBombPrefab;
 	#endregion
@@ -36,10 +37,16 @@ public abstract class Character : MonoBehaviour {
 
 	public bool TakingDamage {get; set;}
 
+	public Collider2D CharacterCollider{
+		get{
+			return typeCollider;
+		}
+	}
 	public virtual void Start(){
 		facingRight = true;
 		MyAnimator = GetComponent<Animator>();
 		MyRigidBody = GetComponent<Rigidbody2D>();
+		TakingDamage = false;
 	}
 
 	//public abstract IEnumerator DealDamage(int damage);

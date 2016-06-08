@@ -53,8 +53,6 @@ public class SpawnerController : MonoBehaviour {
 			if(!EnemyIsAlive()){
 				WaveCompleted();
 				Debug.Log ("Wave completed");
-
-				//Update Points 
 			}else{
 				return;
 			}
@@ -96,11 +94,9 @@ public class SpawnerController : MonoBehaviour {
 	IEnumerator SpawnWave(Wave _wave){
 		//Debug.Log("Spawing Wave "+ _wave.name);
 		state = SpawnState.SPAWNING;
-		for (int i = 0; i < _wave.count; i++)
-		{
+		for (int i = 0; i < _wave.count; i++){
 			SpawnEnemy(_wave.enemy);
 			yield return new WaitForSeconds(1f/_wave.rate); // ou 1f/_wave.delay
-	
 		}
 		state = SpawnState.WAITING;
 		yield break; // sempre usar quando tiver usando IEnumerator
@@ -114,6 +110,13 @@ public class SpawnerController : MonoBehaviour {
 //			Instantiate (enemiesPrefab[level[levelFase].enemy[i]], respawn[level[levelFase].enemyPosition[i]], transform.rotation);
 //		}
 	}
+
+	static void RemoveAllEnemies(Wave _wave){
+   		foreach(Transform enemies in _wave.enemy){
+   			Transform.Destroy(enemies);
+     	}
+     }
+
 
 	#endregion
 

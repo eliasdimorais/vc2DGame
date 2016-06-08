@@ -28,6 +28,10 @@ public class LevelManager : MonoBehaviour
 		SceneManager.LoadScene (name);
 	}
 
+	public void LoadCurrentLevel(){
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+
 	public void QuitRequest(){;
 		Application.Quit ();
 	}

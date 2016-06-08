@@ -3,8 +3,9 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{84F64CCA-74F5-5AD8-2041-ACEC37A32E56}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -33,57 +34,58 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.XML" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
+      <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.dll</HintPath>
+      <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_Scripts\Controller\Camera\CameraController.cs" />
-    <Compile Include="Assets\_Scripts\Controller\Camera\CameraFollow.cs" />
-    <Compile Include="Assets\_Scripts\Controller\Checkpoint.cs" />
-    <Compile Include="Assets\_Scripts\Controller\EnemyDamageController.cs" />
-    <Compile Include="Assets\_Scripts\Controller\EnemySight.cs" />
-    <Compile Include="Assets\_Scripts\Controller\EnemyStates\AttackController.cs" />
-    <Compile Include="Assets\_Scripts\Controller\EnemyStates\IEnemyState.cs" />
-    <Compile Include="Assets\_Scripts\Controller\EnemyStates\IdleState.cs" />
-    <Compile Include="Assets\_Scripts\Controller\EnemyStates\RangeState.cs" />
-    <Compile Include="Assets\_Scripts\Controller\EnemyStates\SearchState.cs" />
-    <Compile Include="Assets\_Scripts\Controller\GameManager.cs" />
-    <Compile Include="Assets\_Scripts\Controller\GameTimer.cs" />
-    <Compile Include="Assets\_Scripts\Controller\IgnoreCollision.cs" />
-    <Compile Include="Assets\_Scripts\Controller\ItemController.cs" />
-    <Compile Include="Assets\_Scripts\Controller\LevelClearController.cs" />
-    <Compile Include="Assets\_Scripts\Controller\LevelManager.cs" />
-    <Compile Include="Assets\_Scripts\Controller\MusicManager.cs" />
-    <Compile Include="Assets\_Scripts\Controller\OptionsController.cs" />
-    <Compile Include="Assets\_Scripts\Controller\PauseMenu.cs" />
-    <Compile Include="Assets\_Scripts\Controller\PlayerController.cs" />
-    <Compile Include="Assets\_Scripts\Controller\PlayerPrefsManager.cs" />
-    <Compile Include="Assets\_Scripts\Controller\QuizController.cs" />
-    <Compile Include="Assets\_Scripts\Controller\SpawnerController.cs" />
-    <Compile Include="Assets\_Scripts\Controller\TestScript.cs" />
-    <Compile Include="Assets\_Scripts\Controller\TouchController.cs" />
-    <Compile Include="Assets\_Scripts\Model\Character.cs" />
-    <Compile Include="Assets\_Scripts\Model\Enemy.cs" />
-    <Compile Include="Assets\_Scripts\Model\Item.cs" />
-    <Compile Include="Assets\_Scripts\Model\Player.cs" />
-    <Compile Include="Assets\_Scripts\Model\Quiz.cs" />
-    <Compile Include="Assets\_Scripts\Model\ShowPoints.cs" />
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\UnityExtensions\Unity\Advertisements\UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\UnityExtensions\Unity\Networking\UnityEngine.Networking.dll</HintPath>
-    </Reference>
+     <Compile Include="Assets\_Scripts\Controller\AudioManager.cs" />
+     <Compile Include="Assets\_Scripts\Controller\Camera\CameraController.cs" />
+     <Compile Include="Assets\_Scripts\Controller\Camera\CameraFollow.cs" />
+     <Compile Include="Assets\_Scripts\Controller\Camera\Controller2D.cs" />
+     <Compile Include="Assets\_Scripts\Controller\Checkpoint.cs" />
+     <Compile Include="Assets\_Scripts\Controller\EnemySight.cs" />
+     <Compile Include="Assets\_Scripts\Controller\EnemyStates\AttackController.cs" />
+     <Compile Include="Assets\_Scripts\Controller\EnemyStates\IEnemyState.cs" />
+     <Compile Include="Assets\_Scripts\Controller\EnemyStates\IdleState.cs" />
+     <Compile Include="Assets\_Scripts\Controller\EnemyStates\RangeState.cs" />
+     <Compile Include="Assets\_Scripts\Controller\EnemyStates\SearchState.cs" />
+     <Compile Include="Assets\_Scripts\Controller\GameManager.cs" />
+     <Compile Include="Assets\_Scripts\Controller\GameTimer.cs" />
+     <Compile Include="Assets\_Scripts\Controller\GlobalManager.cs" />
+     <Compile Include="Assets\_Scripts\Controller\HandController.cs" />
+     <Compile Include="Assets\_Scripts\Controller\IgnoreCollision.cs" />
+     <Compile Include="Assets\_Scripts\Controller\ItemController.cs" />
+     <Compile Include="Assets\_Scripts\Controller\LevelManager.cs" />
+     <Compile Include="Assets\_Scripts\Controller\OptionsController.cs" />
+     <Compile Include="Assets\_Scripts\Controller\PauseMenu.cs" />
+     <Compile Include="Assets\_Scripts\Controller\PlayerPrefsManager.cs" />
+     <Compile Include="Assets\_Scripts\Controller\PortalNextLevel.cs" />
+     <Compile Include="Assets\_Scripts\Controller\QuizController.cs" />
+     <Compile Include="Assets\_Scripts\Controller\SpawnerController.cs" />
+     <Compile Include="Assets\_Scripts\Controller\TestScript.cs" />
+     <Compile Include="Assets\_Scripts\Controller\TouchController.cs" />
+     <Compile Include="Assets\_Scripts\Model\Character.cs" />
+     <Compile Include="Assets\_Scripts\Model\Enemy.cs" />
+     <Compile Include="Assets\_Scripts\Model\Player.cs" />
+     <Compile Include="Assets\_Scripts\Model\Quiz.cs" />
+     <Compile Include="Assets\_Scripts\Model\Serializable.cs" />
+     <Compile Include="Assets\_Scripts\Model\ShowPoints.cs" />
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -93,4 +95,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ProjectExtensions xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><MonoDevelop><Properties><Policies><VersionControlPolicy inheritsSet="Mono"><CommitMessageStyle Header="v1.0&#xA;&#xA;" /></VersionControlPolicy></Policies></Properties></MonoDevelop></ProjectExtensions>
+
 </Project>

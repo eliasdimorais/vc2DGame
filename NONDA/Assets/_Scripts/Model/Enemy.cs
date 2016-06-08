@@ -8,7 +8,8 @@ public class Enemy : Character {
 	[SerializeField]private float fightRange;
 	[SerializeField] private EdgeCollider2D beakCollider;
 	[SerializeField] private float inicialSpeed;
-	[SerializeField] private int damageValueOnPlayer;
+	[SerializeField] protected int damageValueOnPlayer;
+	private float lastDamage = 0;
 
 	public int touchCount;
 	public enum EnemyType{BIRD, LEECH, ANT}
@@ -33,6 +34,7 @@ public class Enemy : Character {
 		base.Start();
 		//Player.Instance.Dead += new DeadEventHandler(RemoveTarget);
 		ChangeState(new IdleState());
+		//takingDamage = MyAnimator.GetComponent<Character>().TakingDamage = false;
 	}
 
 	void Update () {
@@ -44,7 +46,7 @@ public class Enemy : Character {
 	}
 
 	public void Move(){
-		if(!Attack){
+		if(!Attack && !TakingDamage){
 			MyAnimator.SetFloat("Speed", MoveSpeed);
 			transform.Translate(GetDirection() * (inicialSpeed * Time.deltaTime)); //move functions
 		}
@@ -82,25 +84,39 @@ public class Enemy : Character {
 		if (tag == "Edge"){
 			ChangeDirection();
 		}
+//		if(tag == "Player" ){
+//			Player.Instance.DealDamage(damageValueOnPlayer);
+//			CharacterCollider.enabled = false;
+//		}
+		//avoid add force to each other
+		if(tag == "Bird"){
+			CharacterCollider.enabled = false;
+		}
 	}
-	//Handle PLayers DAmage
+
+	void OnTriggerStay2D(Collider2D other){
+		var tag = other.gameObject.tag; 
+		lastDamage += Time.deltaTime; 
+		if(lastDamage >= Player.Instance.immortalTime && tag == "Player"){
+			Player.Instance.DealDamage(damageValueOnPlayer);
+			lastDamage = 0;
+		}	
+
+	}
+
 	void OnTriggerExit2D(Collider2D other){
 		var tag = other.gameObject.tag;
-		if(tag == "Player"){
-			Player.Instance.DealDamage(damageValueOnPlayer);
+		//let the bird go and enable
+		if(tag == "Bird"){
+			CharacterCollider.enabled = true;
 		}
-		
-  	}  
+		if(tag == "Player"){
+			CharacterCollider.enabled = true;
+		}
+	}
+
 
 	#region implemented abstract members of Character
-
-//	public override IEnumerator DealDamage (int damage)
-//	{
-//		
-//			yield return null;
-//		
-//     }	
-
 	public override bool IsDead {
 		get {
 			return touchCount <= 0;
@@ -110,30 +126,34 @@ public class Enemy : Character {
 
 	// Touch Class
 	void OnMouseDown () {
-		touchCount--;
-		gameObject.GetComponent<Animator>().SetTrigger("Damage");
-		if(touchCount <= 0){
-			GameManager.Instance.UpdateScore(score);
-			switch (enemyType){
-				case EnemyType.ANT:
-					break;
-				case EnemyType.BIRD:
-					gameObject.GetComponent<Animator>().SetBool("isDead", true); //I call Destroy Enemy Inside animation trough Event
-					gameObject.SetActive(false);
-					break;
-				case EnemyType.LEECH:
-					break;
-			
+		TakingDamage = true;
+		if(TakingDamage){
+			touchCount--;
+			gameObject.GetComponent<Animator>().SetTrigger("Damage");
+			if(touchCount <= 0){
+				GameManager.Instance.UpdateScore(score);
+				gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+				switch (enemyType){
+					case EnemyType.ANT:
+						break;
+					case EnemyType.BIRD:
+						gameObject.GetComponent<Animator>().SetBool("isDead", true); //I call Destroy Enemy Inside animation trough Event
+						gameObject.SetActive(false);
+						break;
+					case EnemyType.LEECH:
+						break;
+				}
 			}
 		}
+		
 	}
 
 	void OnMouseUp(){
 		gameObject.GetComponent<Animator>().ResetTrigger("Damage"); //I can call trough event as well
+ 		TakingDamage = false;
 	}
 
 	void DestroyEnemy(){
 		DestroyObject(this);
 	}
-
 }

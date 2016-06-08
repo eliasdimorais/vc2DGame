@@ -12,12 +12,12 @@ public class ItemController : MonoBehaviour {
 		public int count; //armazena a quantidade do contador
 		public float rate; // 
 	}
-	public Wave[] waves;
+	[SerializeField] private string spawnSound;
 
+	public Wave[] waves;
 	public float timeBetweenWaves = 2.5f;
 	public float waveCountdown;
 	public Transform[] itemSpawnPoint;
-
 	#endregion
 
 	#region Private Variables
@@ -27,6 +27,12 @@ public class ItemController : MonoBehaviour {
 	private SpawnState state = SpawnState.COUNTING;
 	#endregion
 
+	#region Animation Click Me
+	//[SerializeField] private Sprite ClickMeCircle1;
+	//[SerializeField] private Sprite ClickMeCircle2;
+	//private float timer = 0.5f;
+//	private float delay = 0.5f;
+	#endregion
 
 	void Start(){
 		if(waves.Length == 0){
@@ -37,6 +43,7 @@ public class ItemController : MonoBehaviour {
 			Debug.LogError("No item Spawn referenced");
 		}
 		waveCountdown = timeBetweenWaves;
+		//this.gameObject.GetComponent<SpriteRenderer>().sprite = ClickMeCircle1;
 	}
 
 	void Update(){
@@ -53,6 +60,7 @@ public class ItemController : MonoBehaviour {
 		{
 			if (state != SpawnState.SPAWNING)
 			{
+				HandController.Instance.PlayHandAnimation();
 				StartCoroutine( SpawnWave( waves[nextWave] ) );
 			}
 		}
@@ -60,6 +68,13 @@ public class ItemController : MonoBehaviour {
 		{
 			waveCountdown -= Time.deltaTime;
 		}
+		//timer -= Time.deltaTime;
+//		if(timer <= 0){
+//			if(this.gameObject.GetComponent<SpriteRenderer>().sprite = ClickMeCircle1){
+//				this.gameObject.GetComponent<SpriteRenderer>().sprite = ClickMeCircle2;
+//				timer = delay;
+//			}
+//		}
 	}
 
 	#region Item Spawner
@@ -78,9 +93,10 @@ public class ItemController : MonoBehaviour {
 		state = SpawnState.SPAWNING;
 		for (int i = 0; i < _wave.count; i++)
 		{
+			//int itemIndex = Random.Range(0, _wave.count); randomize between Items
+			//Debug.Log("O indice eh " + itemIndex);
 			SpawnItem(_wave.item);
 			yield return new WaitForSeconds(1f/_wave.rate); // ou 1f/_wave.delay
-
 		}
 		state = SpawnState.WAITING;
 		yield break; // sempre usar quando tiver usando IEnumerator
@@ -89,7 +105,13 @@ public class ItemController : MonoBehaviour {
 	public void SpawnItem(Transform _item){
 		Transform _spawnPoint = itemSpawnPoint[ Random.Range (0,itemSpawnPoint.Length) ]; //choose random point declared on the Unity Editor
 		Instantiate(_item, _spawnPoint.position, _spawnPoint.rotation);
+		//AudioManager.Instance.PlaySound(spawnSound);
 		//Debug.Log(_item + "Position: " + _spawnPoint.position);
+	}
+
+	public void SpawnAnimation (Transform _animation){
+		Transform _spawnPoint = itemSpawnPoint[Random.Range(0, itemSpawnPoint.Length)];
+		Instantiate(_animation, _spawnPoint.position, _spawnPoint.rotation);
 	}
 
 	void WaveCompleted(){

@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
 	#region Score variables
 	[SerializeField] private Text scoreText;
 	[SerializeField] private uint scoreToNextLevel;
+	[SerializeField] private Text scoreCurrentLevel;
 	private int score = 0;
 	private bool isTimeUp = false;
 	#endregion
@@ -46,8 +47,9 @@ public class GameManager : MonoBehaviour {
 	public string healthSoundName;
 	#endregion
 
-	#region Stars Game
-
+	#region Tutorial Canvas
+	[SerializeField]private GameObject tutorialCanvas;
+	//private Animator hands;
 	#endregion
 
 	#region Level Clear Canvas
@@ -57,6 +59,8 @@ public class GameManager : MonoBehaviour {
 	[SerializeField]private Text conditionLabel;
 	[SerializeField]private GameObject wormSad;
 	[SerializeField]private GameObject wormHappy;
+	[SerializeField]private GameObject buttonPlay;
+	[SerializeField]private GameObject buttonPlayAgain;
 	#endregion
 
 	public static GameManager Instance{
@@ -69,26 +73,34 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start(){
-		isPaused = !isPaused;
 		player = GameObject.Find("Player").GetComponent<Player>();
+		scoreCurrentLevel.text = scoreToNextLevel.ToString("0000");
 		currentTimerBar = maxTimerBar;
 		InvokeRepeating("increaseTime", 2, 2);
 		levelClearCanvas.SetActive(false);
-		audioManager = AudioManager.Instance;
-		if(audioManager == null){
-			Debug.LogError("IM KREAZI NO AUDIOMANAGER ON THE MF SCENE");
-		} 
-		//wormHappy = gameObject.GetComponent<SpriteRenderer>().sprite;
+		//audioManager = AudioManager.Instance;
+		//if(audioManager == null){
+			//Debug.LogError("IM KREAZI NO AUDIOMANAGER ON THE MF SCENE");
+		//} 
 		wormSad.SetActive(false);
 		wormHappy.SetActive(false);
+		//hands = GameObject.FindObjectOfType<Animator>();
+		//hands = GameObject.Find("doubleTap").GetComponent<Animator>();
+		//Debug.Log(hands);
+
+		buttonPlay.SetActive(false);
+		buttonPlayAgain.SetActive(false);
 	}
 
 	void Update(){
 		ChangeHeartSpriteUI(player.Health);
 		ShowLevelClear();
+
+	
 	}
 
 	void Awake(){
+		OpenTutorial();
 		scoreText.text = score.ToString("00000");
 	}
 
@@ -104,16 +116,51 @@ public class GameManager : MonoBehaviour {
 	}
 
 	#region Pause Menu Code
-	public void Pause(){
-		if(Time.timeScale == 1){
-			isPaused = true;
-			Time.timeScale = 0;
-			pauseMenu.SetActive(true);
-		}else if(Time.timeScale == 0){
+//	public void Pause(){
+//		if(Time.timeScale == 1){
+//			isPaused = !isPaused;
+//			Time.timeScale = 0;
+//			pauseMenu.SetActive(true);
+//		}else if(Time.timeScale == 0){
+//			isPaused = !isPaused;
+//			Time.timeScale = 1;
+//			pauseMenu.SetActive(false);
+//		}
+//	}
+
+	public void Pause( bool amIPaused){
+		if(amIPaused == true){ //se tiver pausado, despausar
+			isPaused = !isPaused;
+			Time.timeScale = 0; //velocity normal
+		}else if(amIPaused == false){ // pausar
 			isPaused = !isPaused;
 			Time.timeScale = 1;
+		}
+	}
+
+	public void PauseMenu(){
+		if(!isPaused){
+			Pause(true);//se nao tiver pausado, eu envio a informacao que nao esta pausado para o Pause(condition)
+			pauseMenu.SetActive(true);
+		}else{
+			Pause(false);
 			pauseMenu.SetActive(false);
 		}
+	}
+	public void Tutorial(){
+		if(!isPaused){
+			Pause(true);
+			tutorialCanvas.SetActive(true);
+		}else{
+			Pause(false);
+			tutorialCanvas.SetActive(false);
+		}
+	}
+
+	public void OpenTutorial(){
+		pauseMenu.SetActive(false); //disable pause and overlay
+		Pause(true);
+		tutorialCanvas.SetActive(true);
 	}
 
 	public void PauseLevelClear(){
@@ -124,10 +171,6 @@ public class GameManager : MonoBehaviour {
 
 	public void Resume(){
 		isPaused = false;
-	}
-
-	public void LevelSelect(){
-		SceneManager.LoadScene(sceneName:"00Splash");
 	}
 
 	public void Quit(){
@@ -146,6 +189,7 @@ public class GameManager : MonoBehaviour {
 		}
 		if(isTimeUp == true){
 			levelClearCanvas.SetActive(true);
+			Pause(isTimeUp);
 			LoadLevelClear();
 		}
 	}
@@ -161,7 +205,7 @@ public class GameManager : MonoBehaviour {
 
 	public void ChangeHeartSpriteUI(uint newHealth){
 		int updatedHealth = (int) newHealth;
-		audioManager.PlaySound(healthSoundName);
+		//audioManager.PlaySound(healthSoundName);
 		for (int i = (int)healthRemaining; i <= updatedHealth; i--) {
 			if(updatedHealth == i){ 
 				HeartImageUI.sprite = HeartSprites[i];
@@ -180,32 +224,39 @@ public class GameManager : MonoBehaviour {
 		scoreTextCanvas.text = score.ToString("00000");
 		healthTextCanvas.text = player.Health.ToString("0");
 
-		if(healthRemaining > 0 && score >= scoreToNextLevel){
-			conditionLabel.text = "MUITO BEM!";
-			wormSad.SetActive(true);
-		}else{
-			conditionLabel.text = "AHHH NÃO!";
+		if(IsScoreEnough() && IsScoreEnough()){
 			wormHappy.SetActive(true);
+
+			conditionLabel.text = "MUITO BEM!";
+			scoreTextCanvas.color = Color.black;
+		}else{
+			wormSad.SetActive(true);
+
+			conditionLabel.text = "AHHH NÃO!";
+			scoreTextCanvas.color = Color.red;
 		}
 	}
 
 	public void LoadLevelClear(){
 		if(IsScoreEnough() && IsHealthEnough() ){
+			levelClearCanvas.SetActive(true);
+			buttonPlay.SetActive(true);
+			//Debug.Log(buttonPlay.activeInHierarchy);
+			PauseLevelClear();
 			ShowLevelClear();
-			PauseLevelClear();
-			Debug.Log("Passei Antes e tenho vida");
-		}else if(IsTimeUp() && !IsHealthEnough()){
-			//perdeu por vida E/OU tempo
-			Debug.Log("Tempo Esgotado ou PLayer Sem Vida");
-			PauseLevelClear();
+		}else if(IsTimeUp()){
+			levelClearCanvas.SetActive(true);
+
+			Debug.Log("Button Play Again " + buttonPlayAgain);
+
+			buttonPlayAgain.SetActive(true); 
+			Debug.Log(buttonPlayAgain.activeInHierarchy);
+
 			ShowLevelClear();
 		}else{
-			PauseLevelClear();
-			ShowLevelClear();
-
 			return;
+			//Not over yet
 		}
-
 	}
 
 	public bool IsLevelOver(){

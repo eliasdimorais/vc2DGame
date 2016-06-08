@@ -22,28 +22,33 @@ public class TouchController : MonoBehaviour {
 		//Debug.Log(touchCount);
 	}
 
+	void OnTriggerEnter(){
+
+	}
+
 	void OnMouseDown () {
 		touchCount--;
-
 		if(!scaled){
                 transform.localScale = newScale;
                 scaled = true;
         }
 		if(touchCount <= 0){
+		//	AudioManager.Instance.PlaySound("ItemCollected");
 			GameManager.Instance.UpdateScore(points);
 			switch(itemType){
 				case ItemType.BANANA:
-					SpawnPoints(points, transform.position.x, transform.position.y);
+					//SpawnPoints(points, transform.position.x, transform.position.y);
 					//Animacao de Dano e adicionar + numero 
 					break;
 				case ItemType.BREAD:
-					SpawnPoints(points, transform.position.x, transform.position.y);
+					//SpawnPoints(points, transform.position.x, transform.position.y);
 					break;
 				case ItemType.APPLE:
 					break;
 				case ItemType.LETTUCE:
 					break;	
 			}
+
 			DestroyObject(gameObject);
 		}
 //		Debug.Log("Entrou aqui "  + gameObject.name); //NAO DELETAR

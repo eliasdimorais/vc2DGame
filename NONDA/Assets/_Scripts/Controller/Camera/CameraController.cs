@@ -53,6 +53,7 @@ public class CameraController : MonoBehaviour {
 
 	void Update ()
 	{
+		//if(AudioManager.Instance
 		//Verifica se o som esta ativado ou nao (evita o bug de minimizar o jogo e voltar o som).
 		if (PlayerPrefs.GetInt("Sound") == 0 ) 
 		{

@@ -5,13 +5,6 @@ public class EnemySight : MonoBehaviour {
 	#region Private Variables
 	[SerializeField] private Enemy enemy;
 	#endregion
-	void Start () {
-		
-	}
-
-	void Update () {
-	
-	}
 
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.tag == "Player"){
