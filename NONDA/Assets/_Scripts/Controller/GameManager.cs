@@ -77,19 +77,15 @@ public class GameManager : MonoBehaviour {
 
 	void Start(){
 		player = GameObject.Find("Player").GetComponent<Player>();
-		scoreCurrentLevel.text = scoreToNextLevel.ToString("0000");
 		currentTimerBar = maxTimerBar;
 		InvokeRepeating("decreaseTime", 2, 2);
 		levelClearCanvas.SetActive(false);
 		//audioManager = AudioManager.Instance;
 		//if(audioManager == null){
-			//Debug.LogError("IM KREAZI NO AUDIOMANAGER ON THE MF SCENE");
+			//Debug.LogError("IM KREAZI NO AUDIOMANAGER ON THE SCENE");
 		//} 
 		wormSad.SetActive(false);
 		wormHappy.SetActive(false);
-		//hands = GameObject.FindObjectOfType<Animator>();
-		//hands = GameObject.Find("doubleTap").GetComponent<Animator>();
-		//Debug.Log(hands);
 
 		portalOpen.SetActive(false);
 		buttonPlay.SetActive(false);
@@ -99,12 +95,12 @@ public class GameManager : MonoBehaviour {
 	void Update(){
 		ChangeHeartSpriteUI(player.Health);
 		ShowLevelClear();
-		//EnablePortalNextLevel();
 	}
 
 	void Awake(){
 		OpenTutorial();
-		scoreText.text = score.ToString("00000");
+		scoreText.text = score.ToString() + "/" + scoreToNextLevel.ToString() + " pontos";
+
 	}
 
 	void LoadNextLevel(){
