@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9e588eb9a43d14dbeaa9e37951b6e442
-timeCreated: 1464361352
+timeCreated: 1466477432
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -98,7 +98,7 @@ TextureImporter:
         height: 46
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 1, z: 0, w: 0}
+      border: {x: 0, y: 1, z: 0, w: 1}
       outline:
       - - {x: -123, y: 23}
         - {x: -123, y: -23}
@@ -142,35 +142,37 @@ TextureImporter:
         x: 0
         y: 325
         width: 246
-        height: 47
+        height: 46
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 1, z: 0, w: 0}
       outline:
-      - - {x: -27, y: -23.5}
-        - {x: -27, y: -22.5}
-        - {x: -29, y: -19.5}
-        - {x: -23, y: -23.5}
-        - {x: 22, y: -23.5}
-        - {x: 21, y: -20.5}
-        - {x: 16, y: -18.5}
-        - {x: 13, y: -18.5}
-        - {x: 15, y: -18.5}
-        - {x: 21, y: -11.5}
-        - {x: 27, y: -23.5}
-        - {x: 71, y: -23.5}
-        - {x: 70, y: -20.5}
-        - {x: 65, y: -18.5}
-        - {x: 71, y: -10.5}
-        - {x: 76, y: -23.5}
-        - {x: 123, y: -23.5}
-        - {x: 123, y: 23.5}
-        - {x: -123, y: 23.5}
-        - {x: -123, y: -23.5}
-        - {x: -76, y: -23.5}
-        - {x: -76, y: -22.5}
-        - {x: -78, y: -19.5}
-        - {x: -73, y: -23.5}
+      - - {x: -27, y: -23}
+        - {x: -27, y: -22}
+        - {x: -29, y: -19}
+        - {x: -23, y: -23}
+        - {x: 22, y: -23}
+        - {x: 21, y: -20}
+        - {x: 16, y: -18}
+        - {x: 13, y: -18}
+        - {x: 15, y: -18}
+        - {x: 21, y: -11}
+        - {x: 27, y: -23}
+        - {x: 71, y: -23}
+        - {x: 70, y: -20}
+        - {x: 65, y: -18}
+        - {x: 71, y: -10}
+        - {x: 76, y: -23}
+        - {x: 120, y: -23}
+        - {x: 120, y: -22}
+        - {x: 123, y: -17}
+        - {x: 123, y: 23}
+        - {x: -123, y: 23}
+        - {x: -123, y: -23}
+        - {x: -76, y: -23}
+        - {x: -76, y: -22}
+        - {x: -78, y: -19}
+        - {x: -73, y: -23}
     - name: heart_icon@2x_4
       rect:
         serializedVersion: 2
@@ -180,7 +182,7 @@ TextureImporter:
         height: 47
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 1, z: 0, w: 0}
+      border: {x: 0, y: 2, z: 0, w: 0}
       outline:
       - - {x: -27, y: -23.5}
         - {x: -27, y: -22.5}
@@ -243,7 +245,7 @@ TextureImporter:
         height: 46
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 1}
       outline:
       - - {x: 123, y: 23}
         - {x: -123, y: 23}
@@ -262,7 +264,7 @@ TextureImporter:
         height: 47
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 1}
+      border: {x: 0, y: 0, z: 0, w: 2}
       outline:
       - - {x: -28, y: -23.5}
         - {x: -29, y: -20.5}
@@ -288,28 +290,28 @@ TextureImporter:
         x: 0
         y: 92
         width: 246
-        height: 47
+        height: 46
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 1, z: 0, w: 0}
       outline:
-      - - {x: -73, y: -8.5}
-        - {x: -72, y: -23.5}
-        - {x: -27, y: -23.5}
-        - {x: -27, y: -22.5}
-        - {x: -29, y: -19.5}
-        - {x: -32, y: -18.5}
-        - {x: -24, y: -21.5}
-        - {x: -25, y: -23.5}
-        - {x: 123, y: -23.5}
-        - {x: 123, y: 23.5}
-        - {x: -123, y: 23.5}
-        - {x: -123, y: -19.5}
-        - {x: -121, y: -23.5}
-        - {x: -76, y: -23.5}
-        - {x: -76, y: -22.5}
-        - {x: -78, y: -19.5}
-        - {x: -81, y: -18.5}
+      - - {x: -73, y: -8}
+        - {x: -72, y: -23}
+        - {x: -27, y: -23}
+        - {x: -27, y: -22}
+        - {x: -29, y: -19}
+        - {x: -32, y: -18}
+        - {x: -24, y: -21}
+        - {x: -25, y: -23}
+        - {x: 123, y: -23}
+        - {x: 123, y: 23}
+        - {x: -123, y: 23}
+        - {x: -123, y: -18}
+        - {x: -121, y: -23}
+        - {x: -76, y: -23}
+        - {x: -76, y: -22}
+        - {x: -78, y: -19}
+        - {x: -81, y: -18}
     - name: heart_icon@2x_9
       rect:
         serializedVersion: 2
@@ -350,17 +352,16 @@ TextureImporter:
         x: 0
         y: 1
         width: 246
-        height: 46
+        height: 45
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -123, y: 23}
-        - {x: -123, y: -16}
-        - {x: -118, y: -23}
-        - {x: 121, y: -23}
-        - {x: 123, y: -22}
-        - {x: 123, y: 23}
+      - - {x: -123, y: 22.5}
+        - {x: -123, y: -22.5}
+        - {x: 118, y: -22.5}
+        - {x: 123, y: -16.5}
+        - {x: 123, y: 22.5}
     outline: []
   spritePackingTag: 
   userData: 
