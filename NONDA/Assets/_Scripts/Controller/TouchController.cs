@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class TouchController : MonoBehaviour {
 	public Sprite mySprite;
 	public int touchCount;
-	public enum ItemType{BANANA, BREAD, APPLE, LETTUCE};
+	public enum ItemType{BANANA, BREAD, APPLE, LETTUCE, TOUCH_COLOR};
 	public ItemType itemType;
 	public int points;
 	public bool healthy;
@@ -17,13 +17,12 @@ public class TouchController : MonoBehaviour {
 	private Vector3 newScale = new Vector3(2,2,2); //Twice the size.
 	private bool scaled;
 
+	private ItemController itemController;
+
 	void Awake () {
 		gameObject.GetComponent<SpriteRenderer>().sprite = mySprite;
+
 		//Debug.Log(touchCount);
-	}
-
-	void OnTriggerEnter(){
-
 	}
 
 	void OnMouseDown () {
@@ -34,10 +33,11 @@ public class TouchController : MonoBehaviour {
         }
 		if(touchCount <= 0){
 		//	AudioManager.Instance.PlaySound("ItemCollected");
-			GameManager.Instance.UpdateScore(points);
+			GameManager.Instance.UpdateScore2(points);
 			switch(itemType){
 				case ItemType.BANANA:
-					//SpawnPoints(points, transform.position.x, transform.position.y);
+					SpawnPoints(points, gameObject.transform.position.x , gameObject.transform.position.y);
+
 					//Animacao de Dano e adicionar + numero 
 					break;
 				case ItemType.BREAD:
@@ -46,30 +46,34 @@ public class TouchController : MonoBehaviour {
 				case ItemType.APPLE:
 					break;
 				case ItemType.LETTUCE:
+					SpawnPoints(points, transform.position.x, transform.position.y);
 					break;	
 			}
-
+			//itemController.DestroyItem(gameObject);	 //NAO DELETAR
 			DestroyObject(gameObject);
 		}
 //		Debug.Log("Entrou aqui "  + gameObject.name); //NAO DELETAR
-//		ItemController.DestroyObject(gameObject);	 //NAO DELETAR
+		
 	}
 
 	void OnMouseUp(){
 		transform.localScale = defaultScale;
 	}
 
- 	void SpawnPoints(float points, float x, float y){
-		x = Mathf.Clamp(x, 0.05f, 0.95f); //clamp positions to screen to ensure
-		y = Mathf.Clamp(y, 0.05f, 0.9f); //show string
- 		Transform gui = Instantiate(pointsPrefab,new Vector3(x, y, 0),Quaternion.identity) as Transform;
- 		if(healthy){
-			gui.GetComponent<GUIText>().text = "+" + points.ToString();
- 		}else{
-			gui.GetComponent<GUIText>().text = "-" + points.ToString();
- 		}
- 		DestroyObject(gui.gameObject);
- 	} 
+	void  SpawnPoints ( float points ,   float x ,   float y  ){
+         x = Mathf.Clamp(x,0.6f,0.8f); // clamp position to screen to ensure
+         y = Mathf.Clamp(y,0.6f,0.8f);  // the string will be visible
+		Transform gui = Instantiate(pointsPrefab,new Vector3(x,y,0),Quaternion.identity) as Transform;
+
+		if(healthy){
+			gui.GetComponent<GUIText>().fontSize = 65;
+			gui.GetComponent<GUIText>().text = "+ " + points.ToString();
+		}else{
+			gui.GetComponent<GUIText>().color = Color.red;
+			gui.GetComponent<GUIText>().text = "- " + points.ToString();
+		}
+         
+     }
 
  }		
 

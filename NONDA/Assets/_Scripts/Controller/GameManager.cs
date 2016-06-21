@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] private Text scoreText;
 	[SerializeField] private uint scoreToNextLevel;
 	[SerializeField] private Text scoreCurrentLevel;
+	public Image scoreBar;
 	private int score = 0;
+	public float currentScoreBar = 0f;
 	private bool isTimeUp = false;
 	#endregion
 
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour {
 
 	#region Tutorial Canvas
 	[SerializeField]private GameObject tutorialCanvas;
+	[SerializeField]private GameObject portalOpen;
 	//private Animator hands;
 	#endregion
 
@@ -76,7 +79,7 @@ public class GameManager : MonoBehaviour {
 		player = GameObject.Find("Player").GetComponent<Player>();
 		scoreCurrentLevel.text = scoreToNextLevel.ToString("0000");
 		currentTimerBar = maxTimerBar;
-		InvokeRepeating("increaseTime", 2, 2);
+		InvokeRepeating("decreaseTime", 2, 2);
 		levelClearCanvas.SetActive(false);
 		//audioManager = AudioManager.Instance;
 		//if(audioManager == null){
@@ -88,6 +91,7 @@ public class GameManager : MonoBehaviour {
 		//hands = GameObject.Find("doubleTap").GetComponent<Animator>();
 		//Debug.Log(hands);
 
+		portalOpen.SetActive(false);
 		buttonPlay.SetActive(false);
 		buttonPlayAgain.SetActive(false);
 	}
@@ -95,8 +99,7 @@ public class GameManager : MonoBehaviour {
 	void Update(){
 		ChangeHeartSpriteUI(player.Health);
 		ShowLevelClear();
-
-	
+		//EnablePortalNextLevel();
 	}
 
 	void Awake(){
@@ -105,7 +108,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void LoadNextLevel(){
-		if(score >= scoreToNextLevel){
+		if(IsScoreEnough()){
 			SceneManager.LoadScene(sceneBuildIndex:+1);
 		}
 	}
@@ -113,6 +116,17 @@ public class GameManager : MonoBehaviour {
 	public void UpdateScore(int scores){
 		score  += scores;
 		scoreText.text = score.ToString("00000");
+	}
+
+	public void UpdateScore2(int scores){
+		currentScoreBar += scores;
+		float cal_Score = currentScoreBar/scoreToNextLevel;
+		SetScoreBar(cal_Score);
+		score  += scores;
+		scoreText.text = score.ToString() + "/" + scoreToNextLevel.ToString() + " pontos";
+		if(currentScoreBar >= scoreToNextLevel){
+			EnablePortalNextLevel();
+		}
 	}
 
 	#region Pause Menu Code
@@ -180,9 +194,9 @@ public class GameManager : MonoBehaviour {
 
 	#region Timebar
 	//Handle With Level Clear if TIme is up
-	void increaseTime(){
+	void decreaseTime(){
 		currentTimerBar -= 5f;
-		float cal_Timer = currentTimerBar / maxTimerBar;
+		float cal_Timer = (currentTimerBar / maxTimerBar);
 		SetTimeBar(cal_Timer);
 		if(currentTimerBar == 0){
 			isTimeUp = true;
@@ -196,6 +210,10 @@ public class GameManager : MonoBehaviour {
 
 	void SetTimeBar (float myTimer) {
 		timerBar.fillAmount = myTimer;
+	}
+
+	void SetScoreBar (float myScore) {
+		scoreBar.fillAmount = myScore;
 	}
 	#endregion
 
@@ -238,19 +256,16 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void LoadLevelClear(){
-		if(IsScoreEnough() && IsHealthEnough() ){
+		if(IsScoreEnough() && IsHealthEnough() || IsTimeUp() && IsScoreEnough() && IsHealthEnough() ){
 			levelClearCanvas.SetActive(true);
 			buttonPlay.SetActive(true);
-			//Debug.Log(buttonPlay.activeInHierarchy);
+
 			PauseLevelClear();
 			ShowLevelClear();
-		}else if(IsTimeUp()){
+		}else if(IsTimeUp() && !IsScoreEnough() || IsTimeUp() && !IsHealthEnough()){
 			levelClearCanvas.SetActive(true);
 
-			Debug.Log("Button Play Again " + buttonPlayAgain);
-
 			buttonPlayAgain.SetActive(true); 
-			Debug.Log(buttonPlayAgain.activeInHierarchy);
 
 			ShowLevelClear();
 		}else{
@@ -273,6 +288,12 @@ public class GameManager : MonoBehaviour {
 
 	public bool IsTimeUp(){
 		return currentTimerBar <= 0;
+	}
+
+	public void EnablePortalNextLevel(){
+		if(IsScoreEnough() && IsHealthEnough()){
+			portalOpen.SetActive(true);
+		}
 	}
 	#endregion
 
