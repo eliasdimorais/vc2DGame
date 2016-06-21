@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public abstract class Character : MonoBehaviour {
 	#region Protected Variables
-
+	protected bool runNow;
 	protected bool facingRight;
 	protected Rigidbody2D MyRigidBody{get; set;}
 	#endregion
@@ -19,6 +19,7 @@ public abstract class Character : MonoBehaviour {
 	#endregion
 	#region Private Variables
 	[Range (-5f, 5f)][SerializeField] private float moveSpeed;
+	protected float moveSpeedTemp;
 	//[SerializeField] private Transform acidBombPosition;
 	//[SerializeField] private GameObject acidBombPrefab;
 	#endregion
@@ -57,10 +58,23 @@ public abstract class Character : MonoBehaviour {
 			facingRight = !facingRight;
 			MoveSpeed *= -1;
 			Vector3 theScale = transform.localScale;
+			print(theScale.x);
 			theScale.x *= -1;
 			transform.localScale = theScale;
 		#endif
+	}
+
+	/*public IEnumerator RunTemp(float theScale){
+		print(MoveSpeed);
+		if(theScale == 1){
+			MoveSpeed *= 1.5f;
+		}else if(theScale == -1){
+			MoveSpeed *= -1.5f;
 		}
+		yield return new WaitForSeconds(1);
+		print(MoveSpeed);
+		runNow = false;
+	}*/
 
 	public void ThrowAcidBomb(int value){
 //		if(facingRight){
@@ -76,4 +90,6 @@ public abstract class Character : MonoBehaviour {
 		//Se precisar habilitar desabilitar
 		//BeakCollider.enabled = !BeakCollider.enabled;
 	}
+
+
 }

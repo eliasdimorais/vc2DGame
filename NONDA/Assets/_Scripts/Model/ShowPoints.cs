@@ -3,25 +3,26 @@ using System.Collections;
 
 public class ShowPoints : MonoBehaviour {
 	public GUIText pointsText;
-	public Color color = Color.yellow; 
-	public float scroll = 0.05f;
-	public float duration = 1.5f; 
+	public Color color = new Color(0.8f, 0.5f, 0,1.0f); 
+	public float scroll = 0.02f; //scrolling velocity
+	public float duration = 4.5f; 
 	public float alpha;
-	public float temp;
 
 	void Start(){
-		pointsText.color = color;
+		GetComponent<GUIText>().material.color = color;
 		alpha = 1;
-		temp = transform.position.y;
 	}
 
 	void Update(){
 		if(alpha > 0){
-			temp += scroll*Time.deltaTime;
+			Vector3 temp = transform.position;
+			temp.y += scroll*Time.deltaTime;
 			alpha -= Time.deltaTime/duration;
-			alpha = pointsText.material.color.a;
-		}else{
-			DestroyObject(pointsText);
-		}
+			Color tempC=GetComponent<GUIText>().material.color;
+            tempC.a=alpha;
+            GetComponent<GUIText>().material.color=tempC;       
+         } else {
+             Destroy(gameObject); // text vanished - destroy itself
+         }
 	}
 }

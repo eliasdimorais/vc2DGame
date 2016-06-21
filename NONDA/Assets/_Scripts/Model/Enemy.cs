@@ -131,7 +131,7 @@ public class Enemy : Character {
 			touchCount--;
 			gameObject.GetComponent<Animator>().SetTrigger("Damage");
 			if(touchCount <= 0){
-				GameManager.Instance.UpdateScore(score);
+				GameManager.Instance.UpdateScore2(score);
 				gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 				switch (enemyType){
 					case EnemyType.ANT:

@@ -28,12 +28,11 @@ public class Player : Character {
 	//private Vector2 startPosition;
 	private bool isGrounded;
 	[Range (0f, 18f)][SerializeField] private float jumpForce;
-	private bool doubleJumped = false;
+	private bool canDoubleJump = false;
 	private Vector2 fp; // first finger position
 	private Vector2 lp; // last finger position
 	//private float lpX; //Last position in X
-	private int offset = 70; //value where accept touch to calculate swipe
-	private float moveSpeedTemp;
+	private int offset = 90; //value where accept touch to calculate swipe
 	private bool immortal = true;
 	[Range (0f, 30f)][SerializeField]public float immortalTime;
 	[SerializeField] private BoxCollider2D boxCollider;
@@ -84,60 +83,17 @@ public class Player : Character {
 				currentHealth = totalHealth;
 			}
 			if(!IsDead){
-			moveSpeedTemp = 0f;
-			foreach(Touch touch in Input.touches){
-				if (touch.phase == TouchPhase.Began){
-					fp = touch.position;
-					lp = touch.position;
-					//lpX = lp.x;
+
+				if(Input.GetButtonDown("Horizontal")){
+						ChangeDirection();
 				}
-				if (touch.phase == TouchPhase.Moved ){
-					lp = touch.position;
+				if(Input.GetButtonDown("Jump") && isGrounded){
+				        Jump();
 				}
-				if(touch.phase == TouchPhase.Ended){
-					if(touch.position.x < Screen.width/2){ //is it swiping the left side? so, it's directional controller
-						if((fp.x - lp.x) > offset && !facingRight || (fp.x - lp.x) < offset * -1 && facingRight ) //I am going to the same direction that the user swipe?
-						{ 
-							moveSpeedTemp = 0.2f;
-							MoveSpeed  = MoveSpeed + moveSpeedTemp;
-						}
-						else if ((fp.x - lp.x) > offset && facingRight || (fp.x - lp.x) < offset * -1 && !facingRight ) // right swipe
-						{
-							ChangeDirection();
-						}
-					}
-
-					if (touch.position.x > Screen.width/2){ //is it swiping the right side? so it's jumping
-						if((fp.y - lp.y) < offset * -1  ) // up swipe
-						{
-							Jump();
-						}
-					}
-				}
-			}
-
-			if (Instance.transform.position.x <= minX || Instance.transform.position.x >= maxX){
-				float xPos = Mathf.Clamp(Instance.transform.position.x, minX + 0.1f, maxX);
-				Instance.transform.position = new Vector3(xPos, Instance.transform.position.y,1);
-				ChangeDirection();
-			}
-
-			if (Instance.transform.position.y <=minY || Instance.transform.position.y >=maxY){
-				float yPos = Mathf.Clamp(Instance.transform.position.y, minY + 0.1f, maxY);
-				Instance.transform.position = new Vector3(yPos, Instance.transform.position.x,1);
-				// put maxY or  on the jump
-			}
-
-			if(Input.GetButtonDown("Horizontal")){
-					ChangeDirection();
-			}
-			if(Input.GetButtonDown("Jump") && isGrounded){
-			        Jump();
-			}
-			if(Input.GetButtonDown("Jump") && !doubleJumped && !isGrounded){
-			        DoubleJump();
-			} 
-		}  
+				if(Input.GetButtonDown("Jump") && canDoubleJump && !isGrounded){
+				        DoubleJump();
+				} 
+			}  
 		#endif
 	}
 
@@ -145,17 +101,69 @@ public class Player : Character {
 		//Metodo que player move automaticamente
 		#if UNITY_ANDROID
 		if(!IsDead){
+			foreach(Touch touch in Input.touches){
+					if (touch.phase == TouchPhase.Began){
+						fp = touch.position;
+						lp = touch.position;
+						//lpX = lp.x;
+					}
+					if (touch.phase == TouchPhase.Moved ){
+						lp = touch.position;
+					}
+					if(touch.phase == TouchPhase.Ended){
+						//if(touch.position.x < Screen.width/2){ //is it swiping the left side? so, it's directional controller
+							/*if((fp.x - lp.x) > offset && !facingRight || (fp.x - lp.x) < offset * -1 && facingRight ) //I am going to the same direction that the user swipe?
+							{
+								runNow = true;
+								RunTemp(transform.localScale.x); 
+
+							}
+							else */
+							if ((fp.x - lp.x) > offset && facingRight || (fp.x - lp.x) < offset * -1 && !facingRight ) // right swipe
+							{
+								ChangeDirection();
+							}
+						//}
+
+						//if (touch.position.x > Screen.width/2){ //is it swiping the right side? so it's jumping
+							if((fp.y - lp.y) < offset * -1 && (isGrounded || !canDoubleJump)) // up swipe
+							{
+								Jump();
+								if(!canDoubleJump && !isGrounded)
+									canDoubleJump = true;
+
+
+							}
+						else if(canDoubleJump && !isGrounded && (fp.y - lp.y) < offset * -1){
+							DoubleJump();
+							canDoubleJump = false;
+						}
+						//}
+					}
+				}
 			float move = MyRigidBody.velocity.x;
 			MyAnimator.SetFloat("Speed", move);
 
 		    isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 
 			if(isGrounded)
-		        doubleJumped = false;
+		        canDoubleJump = false;
+		    
 
 			MyRigidBody.velocity = new Vector2(Instance.MoveSpeed, MyRigidBody.velocity.y);
 			//MyRigidBody.gravityScale(4);
 		}
+
+//		if (Instance.transform.position.x <= minX || Instance.transform.position.x >= maxX){
+//			float xPos = Mathf.Clamp(Instance.transform.position.x, minX + 0.1f, maxX);
+//			Instance.transform.position = new Vector3(xPos, Instance.transform.position.y,1);
+//			ChangeDirection();
+//		}
+//
+//		if (Instance.transform.position.y <=minY || Instance.transform.position.y >=maxY){
+//			float yPos = Mathf.Clamp(Instance.transform.position.y, minY + 0.1f, maxY);
+//			Instance.transform.position = new Vector3(yPos, Instance.transform.position.x,1);
+//		}
 		#endif
 	}
 
@@ -168,7 +176,6 @@ public class Player : Character {
 	public void DoubleJump(){
 	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, instance.JumpForce);
 		//AudioManager.Instance.PlaySound(jumpSoundName);
-	    doubleJumped = true;
 	}
 
 	void OnTriggerEnter2D (Collider2D other){
@@ -202,14 +209,6 @@ public class Player : Character {
 		yield return new WaitForSeconds(immortalTime);
 		//yield return new WaitForEndOfFrame();
 		immortal = !immortal;
-		Debug.Log("Passei por aqui");
-
-//		while (!immortal){
-//			spriteRenderer.enabled = false;
-//			yield return new WaitForSeconds(.1f);
-//			spriteRenderer.enabled = true;
-//			yield return new WaitForSeconds (.1f);
-//		}
 	}
 
 	public override bool IsDead {
@@ -233,4 +232,6 @@ public class Player : Character {
 			Dead();
 		}
 	}*/
+
+
 }
