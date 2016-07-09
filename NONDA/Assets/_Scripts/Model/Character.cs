@@ -58,7 +58,6 @@ public abstract class Character : MonoBehaviour {
 			facingRight = !facingRight;
 			MoveSpeed *= -1;
 			Vector3 theScale = transform.localScale;
-			print(theScale.x);
 			theScale.x *= -1;
 			transform.localScale = theScale;
 		#endif

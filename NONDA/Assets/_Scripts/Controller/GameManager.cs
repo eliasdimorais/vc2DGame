@@ -11,14 +11,13 @@ public class GameManager : MonoBehaviour {
 
 	#region Instances
 	private static GameManager instance;
-	private AudioManager audioManager;
+	//private AudioManager audioManager;
 	private Player player; 
 	#endregion
 
 	#region Score variables
 	[SerializeField] private Text scoreText;
 	[SerializeField] private uint scoreToNextLevel;
-	[SerializeField] private Text scoreCurrentLevel;
 	public Image scoreBar;
 	private int score = 0;
 	public float currentScoreBar = 0f;
@@ -76,14 +75,15 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start(){
+		//audioManager = AudioManager.Instance;
+		if(AudioManager.Instance == null){
+			Debug.LogError("IM KREAZI NO AUDIOMANAGER ON THE SCENE");
+		} 
+
 		player = GameObject.Find("Player").GetComponent<Player>();
 		currentTimerBar = maxTimerBar;
 		InvokeRepeating("decreaseTime", 2, 2);
 		levelClearCanvas.SetActive(false);
-		//audioManager = AudioManager.Instance;
-		//if(audioManager == null){
-			//Debug.LogError("IM KREAZI NO AUDIOMANAGER ON THE SCENE");
-		//} 
 		wormSad.SetActive(false);
 		wormHappy.SetActive(false);
 
@@ -220,7 +220,24 @@ public class GameManager : MonoBehaviour {
 	public void ChangeHeartSpriteUI(uint newHealth){
 		int updatedHealth = (int) newHealth;
 		//audioManager.PlaySound(healthSoundName);
+
 		for (int i = (int)healthRemaining; i <= updatedHealth; i--) {
+			if(updatedHealth == i){ 
+				HeartImageUI.sprite = HeartSprites[i];
+				break;
+			}
+			if(updatedHealth <= 0){
+				LoadLevelClear(); //lose
+				break;
+			}
+		}
+		HealthRemaining(newHealth);
+	}
+
+	public void AddHeartSpriteUI(uint newHealth){
+		int updatedHealth = (int) newHealth;
+
+		for (int i = (int)healthRemaining; i >= updatedHealth; i--) {
 			if(updatedHealth == i){ 
 				HeartImageUI.sprite = HeartSprites[i];
 				break;
@@ -228,7 +245,6 @@ public class GameManager : MonoBehaviour {
 		}
 		HealthRemaining(newHealth);
 	}
-
 	void HealthRemaining(uint totalHealth){
 		healthRemaining = totalHealth;
 	}
@@ -249,6 +265,9 @@ public class GameManager : MonoBehaviour {
 			conditionLabel.text = "AHHH NÃO!";
 			scoreTextCanvas.color = Color.red;
 		}
+
+
+		//audioManager.PlaySound(levelClearMusic);
 	}
 
 	public void LoadLevelClear(){

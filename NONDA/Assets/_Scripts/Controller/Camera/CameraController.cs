@@ -23,12 +23,13 @@ public class CameraController : MonoBehaviour {
 	public float smoothTimeY = 2.0f;						// Tempo para a camera se deslocar no eixo y.
 	public Vector2 yAxisArea;								// Coordenadas adicionais minimas/maximas em que a camera ira seguir no eixo y.
 	public Vector2 cameraAreaYAxis;						// Coordenadas minimas/maximas em que a camera ira seguir no eixo y (ja calculada).
-		
+
 	void Awake ()
 	{
 		// Pegando referencia do jogador.
 		//player = GameObject.Find("Nonda").transform;
 		player = GameObject.Find("Player").transform;
+
 
 
 		cameraStartCoord = new Vector2 (transform.position.x, transform.position.y);

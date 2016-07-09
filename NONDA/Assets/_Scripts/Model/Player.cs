@@ -9,6 +9,7 @@ public class Player : Character {
 
 	#region Public Ground Variables
 	public Transform groundCheck;
+	public Transform[] groundPoints;
 	public float groundRadius;
 	public LayerMask whatIsGround;
 	//public event DeadEventHandler Dead;
@@ -40,15 +41,24 @@ public class Player : Character {
 	//[SerializeField]private SpriteRenderer spriteRenderer;
 	#endregion
 
-	#region Instances 
-	private static Player instance;
+
+	#region Test platform 
+	private float groundBuffer;
+//	private float height;
+//	private float length;
+	//private float topMost;
+//	private Vector2 dimensions;
+	#endregion
+
+	#region Instances
+	private static Player player;
 
 	public static Player Instance{
 		get {
-			if(instance == null){
-				instance = GameObject.FindObjectOfType<Player>();
+			if(player == null){
+				player = GameObject.FindObjectOfType<Player>();
 			}
-			return instance;
+			return player;
 		}
 	}
 
@@ -72,16 +82,29 @@ public class Player : Character {
 		base.Start();
 		//startPosition = transform.position;
 		//spriteRenderer = GetComponent<SpriteRenderer>();
-		isGrounded = true;
 	    MyRigidBody.freezeRotation = true;
 	    currentHealth = totalHealth;
+
+
+//	    length = transform.localScale.x * ((BoxCollider2D)GetComponent<Collider2D>()).size.x;
+//		height = transform.localScale.y * ((BoxCollider2D)GetComponent<Collider2D>()).size.y;
+
+//		dimensions = new Vector2(length, height);
+
+		//get the top part of our collider
+		//topMost = transform.position.y + dimensions.y / 2;
+
 	}
 
 	void Update(){
 		#if UNITY_ANDROID
-			if (currentHealth > totalHealth){
-				currentHealth = totalHealth;
-			}
+			//if((topMost - groundBuffer > groundCheck.position.y){
+			//	gameObject.layer = 16;
+			//}
+			
+//			if (currentHealth > totalHealth){
+//				currentHealth = totalHealth;
+//			}
 			if(!IsDead){
 
 				if(Input.GetButtonDown("Horizontal")){
@@ -90,15 +113,16 @@ public class Player : Character {
 				if(Input.GetButtonDown("Jump") && isGrounded){
 				        Jump();
 				}
-				if(Input.GetButtonDown("Jump") && canDoubleJump && !isGrounded){
+				if(Input.GetButtonDown("Jump") && !canDoubleJump && !isGrounded){
 				        DoubleJump();
 				} 
 			}  
 		#endif
 	}
-
+	 
 	void FixedUpdate(){
 		//Metodo que player move automaticamente
+		isGrounded = IsGrounded();
 		#if UNITY_ANDROID
 		if(!IsDead){
 			foreach(Touch touch in Input.touches){
@@ -144,7 +168,7 @@ public class Player : Character {
 			float move = MyRigidBody.velocity.x;
 			MyAnimator.SetFloat("Speed", move);
 
-		    isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+		   // isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 
 			if(isGrounded)
 		        canDoubleJump = false;
@@ -167,14 +191,29 @@ public class Player : Character {
 		#endif
 	}
 
+	private bool IsGrounded(){
+		if(MyRigidBody.velocity.y <= 0 ){
+			foreach (Transform point in groundPoints) {
+				Collider2D[] colliders = Physics2D.OverlapCircleAll(point.position, groundRadius, whatIsGround);
+
+				for(int i = 0; i < colliders.Length; i++){
+					if(colliders[i].gameObject != player){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public void Jump(){
 		MyAnimator.SetTrigger("SetJump");
-	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, instance.JumpForce);
+	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, player.JumpForce);
 		//AudioManager.Instance.PlaySound(jumpSoundName);
 	}
 
 	public void DoubleJump(){
-	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, instance.JumpForce);
+	    MyRigidBody.velocity = new Vector2 (MyRigidBody.velocity.x, player.JumpForce);
 		//AudioManager.Instance.PlaySound(jumpSoundName);
 	}
 
@@ -196,14 +235,16 @@ public class Player : Character {
 		//IndicateImmortal();
 		if(!IsDead && immortal){
 			MyAnimator.SetTrigger("Hit");
-			GameManager.Instance.ChangeHeartSpriteUI(totalHealth);
 			totalHealth -= (uint)damage;
+			GameManager.Instance.ChangeHeartSpriteUI(totalHealth);
 			//AudioManager.Instance.PlaySound(hitSoundName);
-		}else{
-			//AudioManager.Instance.PlaySound(deadSoundName);
-			Dead();
+		}else
+		if(IsDead){
+				Dead();
+				GameManager.Instance.LoadLevelClear();
+				//AudioManager.Instance.PlaySound(deadSoundName);
 		}
-	}
+ 	}
 	#endregion
 	private IEnumerator IndicateImmortal(){
 		yield return new WaitForSeconds(immortalTime);
@@ -216,14 +257,12 @@ public class Player : Character {
 			if(totalHealth <= 0){
 				Dead();
 			}
-
 			return totalHealth <= 0;
 		}
 	}
 
 	public void Dead(){
 		MyAnimator.SetTrigger("Dead");
-		GameManager.Instance.LoadLevelClear();
 	}
 
 	/*public void OnDead(){
@@ -232,6 +271,4 @@ public class Player : Character {
 			Dead();
 		}
 	}*/
-
-
 }

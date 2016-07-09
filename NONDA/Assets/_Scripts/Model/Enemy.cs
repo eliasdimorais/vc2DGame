@@ -10,6 +10,7 @@ public class Enemy : Character {
 	[SerializeField] private float inicialSpeed;
 	[SerializeField] protected int damageValueOnPlayer;
 	private float lastDamage = 0;
+	public Transform pointsPrefab;
 
 	public int touchCount;
 	public enum EnemyType{BIRD, LEECH, ANT}
@@ -139,6 +140,8 @@ public class Enemy : Character {
 					case EnemyType.BIRD:
 						gameObject.GetComponent<Animator>().SetBool("isDead", true); //I call Destroy Enemy Inside animation trough Event
 						gameObject.SetActive(false);
+
+						SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
 						break;
 					case EnemyType.LEECH:
 						break;
@@ -156,4 +159,15 @@ public class Enemy : Character {
 	void DestroyEnemy(){
 		DestroyObject(this);
 	}
+
+	void  SpawnPoints ( float points ,   float x ,   float y  ){
+         x = Mathf.Clamp(x,0.4f,0.5f); // clamp position to screen to ensure
+         y = Mathf.Clamp(y,0.5f,0.5f);  // the string will be visible
+		Transform gui = Instantiate(pointsPrefab,new Vector3(x,y,0),Quaternion.identity) as Transform;
+
+		gui.GetComponent<GUIText>().fontSize = 65;
+		gui.GetComponent<GUIText>().color = new Color(0.647f, 0.863f, 0.251f);
+		gui.GetComponent<GUIText>().text = "+ " + points.ToString();  
+     }
+
 }
