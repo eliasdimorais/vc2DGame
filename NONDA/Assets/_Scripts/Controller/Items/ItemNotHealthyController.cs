@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemController : MonoBehaviour {
+public class ItemNotHealthyController : MonoBehaviour {
 
 	#region Public Variables
 	public enum SpawnState{SPAWNING, WAITING, COUNTING};
@@ -10,7 +10,7 @@ public class ItemController : MonoBehaviour {
 		public string name; //nome da Wave (para Items)
 		public Transform item; // Referencia para instanciar o objeto (Enemies, player, item)
 		//public Transform touchColorItem; //referencia para cor do touch 
-		public int count; //armazena a quantidade do contador
+		public int count; //armazena	 a quantidade do contador
 		public float rate; // 
 	}
 	[SerializeField] private string spawnSound;
@@ -40,17 +40,14 @@ public class ItemController : MonoBehaviour {
 			Debug.LogError("No item Spawn referenced");
 		}
 		waveCountdown = timeBetweenWaves;
-		//touchColor = GameObject.FindObjectOfType<SpriteRenderer>();
-		//Debug.Log(touchColor);
+
 	}
 
 	void Update(){
-		//touchColor.color = Color.red;
 		if(state == SpawnState.WAITING){
 			if(!ItemHasEnergy()){
 				WaveCompleted();
 				Debug.Log ("Wave completed");
-				//Update Points on Game Manager
 			}else{
 				return;
 			}
@@ -67,13 +64,6 @@ public class ItemController : MonoBehaviour {
 		{
 			waveCountdown -= Time.deltaTime;
 		}
-		//timer -= Time.deltaTime;
-//		if(timer <= 0){
-//			if(this.gameObject.GetComponent<SpriteRenderer>().sprite = ClickMeCircle1){
-//				this.gameObject.GetComponent<SpriteRenderer>().sprite = ClickMeCircle2;
-//				timer = delay;
-//			}
-//		}
 	}
 
 	#region Item Spawner
@@ -92,35 +82,18 @@ public class ItemController : MonoBehaviour {
 		state = SpawnState.SPAWNING;
 		for (int i = 0; i < _wave.count; i++)
 		{
-			//int itemIndex = Random.Range(0, _wave.count); randomize between Items
-			//Debug.Log("O indice eh " + itemIndex);
-
-			//SpawnItem(_wave.item, _wave.touchColorItem);
 			SpawnItem(_wave.item);
 
 			yield return new WaitForSeconds(1f/_wave.rate); // ou 1f/_wave.delay
 		}
 
-//		if(tc.healthy == false){
-//			Destroy(_wave.item, lifetime);
-//		}
 		state = SpawnState.WAITING;
 		yield break; // sempre usar quando tiver usando IEnumerator
-	}
-
-	public void SpawnItem(Transform _item, Transform _touchColorItem){
-		Transform _spawnPoint = itemSpawnPoint[ Random.Range (0,itemSpawnPoint.Length) ]; //choose random point declared on the Unity Editor
-		Instantiate(_item, _spawnPoint.position, _spawnPoint.rotation);
-		//Instantiate(_touchColorItem, _spawnPoint.position, _spawnPoint.rotation);
-
-		//Debug.Log(_item + "Position: " + _spawnPoint.position);
 	}
 
 	public void SpawnItem(Transform _item){
 		Transform _spawnPoint = itemSpawnPoint[ Random.Range (0,itemSpawnPoint.Length) ]; //choose random point declared on the Unity Editor
 		Instantiate(_item, _spawnPoint.position, _spawnPoint.rotation);
-		//_item.transform.SetParent(this.transform); cannot set as a parent because the parent is prefab. To prevent corruption
-		//AudioManager.Instance.PlaySound(spawnSound);
 	}
 
 	void WaveCompleted(){
@@ -129,7 +102,6 @@ public class ItemController : MonoBehaviour {
 		if(nextWave+1 > waves.Length -1){
 			nextWave = 0;
 			Debug.Log("All waves completed! Looping...");
-			//Chamar Level Clear e depois chamar LevelManager (Level 2)
 		}else{
 			nextWave++;
 		}
