@@ -14,18 +14,26 @@ public class TouchController : MonoBehaviour {
 	public Transform pointsPrefab;
 	float posX;
 	float posY;
+	public float timeUpToDestroy = 5f;
 
 	private Vector3 defaultScale = new Vector3(1,1,1);
 	private Vector3 newScale = new Vector3(2,2,2); //Twice the size.
 	private bool scaled;
 	private int lastDamage = 0;
-
+	private float destroyTime = 4f;
+	private float minTime = 2.5f;
 	private ItemController itemController;
 
 	void Awake () {
 		gameObject.GetComponent<SpriteRenderer>().sprite = mySprite;
 		lastDamage = touchCount;
-		//Debug.Log(touchCount);
+		SetRandomTimeDestroy();
+		timeUpToDestroy = minTime;
+	}
+
+	void Update(){
+		timeUpToDestroy += Time.deltaTime;
+		DestroyMe();
 	}
 
 	void OnMouseDown () {
@@ -119,5 +127,14 @@ public class TouchController : MonoBehaviour {
 		energyBar.fillAmount = myScore;
 	}
 
+	void DestroyMe(){
+		if (timeUpToDestroy >= destroyTime && (itemType == ItemType.CHEESE || itemType == ItemType.CHICKEN_BONE)){
+			Destroy(this.gameObject);
+		}
+	}
+
+	void SetRandomTimeDestroy(){
+		destroyTime = Random.Range(timeUpToDestroy, timeUpToDestroy+7.5f);
+	}
  }		
 
