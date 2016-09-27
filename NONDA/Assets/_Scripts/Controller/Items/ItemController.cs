@@ -91,7 +91,7 @@ public class ItemController : MonoBehaviour {
 	public void SpawnItem(Transform _item){
 		Transform _spawnPoint = itemSpawnPoint[ Random.Range (0,itemSpawnPoint.Length) ]; //choose random point declared on the Unity Editor
 		Instantiate(_item, _spawnPoint.position, _spawnPoint.rotation);
-		//AudioManager.Instance.PlaySound(spawnSound);
+		AudioManager.Instance.PlaySound(spawnSound);
 	}
 
 	void WaveCompleted(){

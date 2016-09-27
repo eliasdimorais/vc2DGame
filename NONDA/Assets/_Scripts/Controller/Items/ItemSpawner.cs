@@ -10,7 +10,7 @@ public class ItemSpawner : MonoBehaviour
 		public Transform item;// Referencia para instanciar o objeto (Enemies, player, item)
 		public int count;//armazena a quantidade do contador
 	}
-
+	[SerializeField] private string spawnSound;
 	public Wave[] waves;
 	public Transform[] itemSpawnPoint;
 	private int nextWave = 0;

@@ -7,7 +7,7 @@ public class TouchController : MonoBehaviour {
 	public Image energyBar;
 	public Sprite mySprite;
 	public int touchCount;
-	public enum ItemType{BANANA, BREAD, APPLE, LETTUCE, EGG, COFFEE, TEA_BAG, CHICKEN_BONE, CHEESE, TOUCH_COLOR};
+	public enum ItemType{BANANA, BREAD, APPLE, LETTUCE, CRESS, EGG, COFFEE, TEA_BAG, CHICKEN_BONE, FISH_BONE, CHEESE};
 	public ItemType itemType;
 	public int score;
 	public bool healthy;
@@ -56,13 +56,15 @@ public class TouchController : MonoBehaviour {
 				#region GREEN Itens
 				case ItemType.BANANA:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
-					//Animacao de Dano e adicionar + numero 
 					break;
 				case ItemType.APPLE:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
 					break;
 				case ItemType.LETTUCE:
-					SpawnPoints(score, transform.position.x, transform.position.y);
+					SpawnPoints(score, gameObject.transform.position.x, gameObject.transform.position.y);
+					break;
+				case ItemType.CRESS:
+					SpawnPoints(score, gameObject.transform.position.x, gameObject.transform.position.y);
 					break;
 				#endregion
 
@@ -73,14 +75,19 @@ public class TouchController : MonoBehaviour {
 				case ItemType.COFFEE:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
 					break;
+				case ItemType.EGG:
+					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
+					break;
 				#endregion
 
 				#region RED Itens
 				case ItemType.CHICKEN_BONE:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
 					break;
-
 				case ItemType.CHEESE:
+					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
+					break;
+				case ItemType.FISH_BONE:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
 					break;
 
@@ -128,7 +135,7 @@ public class TouchController : MonoBehaviour {
 	}
 
 	void DestroyMe(){
-		if (timeUpToDestroy >= destroyTime && (itemType == ItemType.CHEESE || itemType == ItemType.CHICKEN_BONE)){
+		if (timeUpToDestroy >= destroyTime && (itemType == ItemType.CHEESE || itemType == ItemType.CHICKEN_BONE || itemType == ItemType.FISH_BONE)){
 			Destroy(this.gameObject);
 		}
 	}
