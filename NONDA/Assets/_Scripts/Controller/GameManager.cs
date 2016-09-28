@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
 
 	#region Instances
 	private static GameManager instance;
-	//private AudioManager audioManager;
+	AudioManager audioManager;
 	private Player player; 
 	#endregion
 
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start(){
-		//audioManager = AudioManager.Instance;
+		audioManager = AudioManager.Instance;
 		if(AudioManager.Instance == null){
 			Debug.LogError("IM KREAZI NO AUDIOMANAGER ON THE SCENE");
 		} 
