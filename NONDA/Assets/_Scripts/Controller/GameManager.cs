@@ -274,14 +274,11 @@ public class GameManager : MonoBehaviour {
 		if(IsScoreEnough() && IsHealthEnough() || IsTimeUp() && IsScoreEnough() && IsHealthEnough() ){
 			levelClearCanvas.SetActive(true);
 			buttonPlay.SetActive(true);
-
 			PauseLevelClear();
 			ShowLevelClear();
 		}else if(IsTimeUp() && !IsScoreEnough() || IsTimeUp() && !IsHealthEnough()){
 			levelClearCanvas.SetActive(true);
-
 			buttonPlayAgain.SetActive(true); 
-
 			ShowLevelClear();
 		}else{
 			return;
