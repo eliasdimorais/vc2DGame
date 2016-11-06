@@ -23,6 +23,8 @@ public class TouchController : MonoBehaviour {
 	private float destroyTime = 4f;
 	private float minTime = 2.5f;
 	private ItemController itemController;
+	public AudioClip healthyItemCollected;
+	public AudioClip notHealthyItemColleted;
 
 	void Awake () {
 		gameObject.GetComponent<SpriteRenderer>().sprite = mySprite;
@@ -44,6 +46,7 @@ public class TouchController : MonoBehaviour {
                 scaled = true;
         }
 		if(touchCount <= 0){
+			
 			//AudioManager.Instance.PlaySound("ItemCollected");
 			GameManager.Instance.UpdateScore2(score);
 			switch(itemType){
@@ -56,39 +59,49 @@ public class TouchController : MonoBehaviour {
 				#region GREEN Itens
 				case ItemType.BANANA:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
+					SoundManager.instance.RandomizeSfx(healthyItemCollected);
 					break;
 				case ItemType.APPLE:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
+					SoundManager.instance.RandomizeSfx(healthyItemCollected);
 					break;
 				case ItemType.LETTUCE:
 					SpawnPoints(score, gameObject.transform.position.x, gameObject.transform.position.y);
+					SoundManager.instance.RandomizeSfx(healthyItemCollected);
 					break;
 				case ItemType.CRESS:
 					SpawnPoints(score, gameObject.transform.position.x, gameObject.transform.position.y);
+					SoundManager.instance.RandomizeSfx(healthyItemCollected);
 					break;
 				#endregion
 
 				#region YELLOW Itens
 				case ItemType.BREAD:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
+					SoundManager.instance.RandomizeSfx(healthyItemCollected);
 					break;
 				case ItemType.COFFEE:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
+					SoundManager.instance.RandomizeSfx(healthyItemCollected);
 					break;
 				case ItemType.EGG:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
+					SoundManager.instance.RandomizeSfx(healthyItemCollected);
 					break;
 				#endregion
 
 				#region RED Itens
 				case ItemType.CHICKEN_BONE:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
+					SoundManager.instance.RandomizeSfx(notHealthyItemColleted);
 					break;
 				case ItemType.CHEESE:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
+					SoundManager.instance.RandomizeSfx(notHealthyItemColleted);
 					break;
 				case ItemType.FISH_BONE:
 					SpawnPoints(score, gameObject.transform.position.x , gameObject.transform.position.y);
+					SoundManager.instance.RandomizeSfx(notHealthyItemColleted);
 					break;
 
 				#endregion

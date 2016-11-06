@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\MusicManager.cs" />
      <Compile Include="Assets\_Scripts\Controller\AudioManager.cs" />
      <Compile Include="Assets\_Scripts\Controller\Camera\CameraController.cs" />
      <Compile Include="Assets\_Scripts\Controller\Camera\CameraFollow.cs" />
@@ -74,6 +75,7 @@
      <Compile Include="Assets\_Scripts\Controller\Items\ItemSpawner.cs" />
      <Compile Include="Assets\_Scripts\Controller\LevelManager.cs" />
      <Compile Include="Assets\_Scripts\Controller\QuizController.cs" />
+     <Compile Include="Assets\_Scripts\Controller\SoundManager.cs" />
      <Compile Include="Assets\_Scripts\Controller\TouchController.cs" />
      <Compile Include="Assets\_Scripts\Controller\unused\GameTimer.cs" />
      <Compile Include="Assets\_Scripts\Controller\unused\ItemNotHealthyController.cs" />

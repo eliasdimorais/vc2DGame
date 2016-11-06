@@ -34,14 +34,12 @@ public class QuizController : MonoBehaviour {
 
 	void Awake(){
 		int y = SceneManager.GetActiveScene().buildIndex;
-
-		if(y == 7){ //change for whatever build index number is when final project is done
+		if(y == 11){ //change for whatever build index number is when final project is done
 			LoadDataOnPlayerPrefs();
 		}
 	}
 
 	void Start(){
-		
 		if(unansweredQuestions == null || unansweredQuestions.Count  ==  0){
 			unansweredQuestions = questions.ToList<Quiz>();
 		}	

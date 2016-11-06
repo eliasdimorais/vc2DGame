@@ -130,8 +130,6 @@ public class PlayerPrefsManager : MonoBehaviour {
 	public static void SetNumberWrongAnswers(int numberWrongAnswers){
 		if (numberWrongAnswers > PlayerPrefs.GetInt(NUMBER_WRONG_ANSWERS)){
 			PlayerPrefs.SetInt(NUMBER_WRONG_ANSWERS, numberWrongAnswers);
-		}else{
-			Debug.LogError("NUMBER LESS THAN 0 or QUIZ OUT OF RANGE");
 		}
 	}
 
@@ -142,8 +140,6 @@ public class PlayerPrefsManager : MonoBehaviour {
 	public static void SetNumberCorrectAnswers(int numberCorrectAnswers){
 		if (numberCorrectAnswers > PlayerPrefs.GetInt(NUMBER_CORRECT_ANSWERS)){
 			PlayerPrefs.SetInt(NUMBER_CORRECT_ANSWERS, numberCorrectAnswers);
-		}else{
-			Debug.LogError("NUMBER LESS THAN 0 or QUIZ OUT OF RANGE");
 		}
 	}
 

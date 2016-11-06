@@ -10,8 +10,9 @@ public class GameManager : MonoBehaviour {
 	#endregion
 
 	#region Instances
+	public AudioClip gameOverSound;
 	private static GameManager instance;
-	AudioManager audioManager;
+	//AudioManager audioManager;
 	private Player player; 
 	#endregion
 
@@ -75,10 +76,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start(){
-		audioManager = AudioManager.Instance;
-		if(AudioManager.Instance == null){
-			Debug.LogError("IM KREAZI NO AUDIOMANAGER ON THE SCENE");
-		} 
+		//audioManager = AudioManager.Instance;
+//		if(AudioManager.Instance == null){
+//			Debug.LogError("IM KREAZI NO AUDIOMANAGER ON THE SCENE");
+//		} 
 
 		player = GameObject.Find("Player").GetComponent<Player>();
 		currentTimerBar = maxTimerBar;
@@ -276,6 +277,7 @@ public class GameManager : MonoBehaviour {
 			buttonPlay.SetActive(true);
 			PauseLevelClear();
 			ShowLevelClear();
+			SoundManager.instance.PlaySingle(gameOverSound);
 		}else if(IsTimeUp() && !IsScoreEnough() || IsTimeUp() && !IsHealthEnough()){
 			levelClearCanvas.SetActive(true);
 			buttonPlayAgain.SetActive(true); 
